@@ -1,3 +1,7 @@
 body {
-    background-image: "/images/background.jpeg";
+    margin: 0;
+}
+
+canvas {
+    border: solid;
 }
