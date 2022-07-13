@@ -13,20 +13,39 @@ canvas.height = window.innerHeight;
 
 playerIcon = canvas.getContext("2d");
 
+//player info
+//starting x 
+const startingX = canvas.width/10
+const startingY = canvas.height/2
+
 // add player on page
-const addPlayerIcon = () => {
+const addPlayerIcon = (posX,posY) => {
     shoeIcon = new Image();
     shoeIcon.src = "images/shoe_icon.png";
     shoeIcon.onload = () => {
-        playerIcon.drawImage(shoeIcon,canvas.width/10,canvas.height/2)
+        playerIcon.drawImage(shoeIcon,posX,posY)
     }
 }
 
-
-addPlayerIcon();
-
+addPlayerIcon(startingX,startingY);
 
 
+//move playerIcon
+document.addEventListener("keyup",(e)=>{
+    if (e.key === "ArrowUp") {
+        // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+        console.log(playerIcon)
+        console.log("Up")
+        
+        playerIcon.beginPath();
+        playerIcon.lineTo(50,150);
+        playerIcon.stroke();
+        playerIcon.moveTo(canvas.width/10,canvas.height/4);
+        
+    } else if (e.key === "ArrowDown") {
+        console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+    }
+})
 
 
 
