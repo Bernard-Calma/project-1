@@ -32,8 +32,11 @@ const addPlayerIcon = (posX,posY) => {
     positionPlayerY = posY
 }
 
+addPlayerIcon(startingX,startingY);
+
 //move player function
-const movePlayer = (posX,posY) => {
+// player move up
+const movePlayerUp = (posX,posY) => {
     let oldX = posX;
     let oldY = posY;
     positionPlayerY = oldY - 10;
@@ -44,20 +47,32 @@ const movePlayer = (posX,posY) => {
         playerIcon.drawImage(imgNew,oldX,positionPlayerY)
     }
 }
+// player move down
+const movePlayerDown = (posX,posY) => {
+    let oldX = posX;
+    let oldY = posY;
+    positionPlayerY = oldY + 10;
+    imgNew = new Image();
+    imgNew.src = shoeIconPath;
+    imgNew.onload = () => {
+        playerIcon.clearRect(0, 0, canvas.width, canvas.height);
+        playerIcon.drawImage(imgNew,oldX,positionPlayerY)
+    }
+}
 
-addPlayerIcon(startingX,startingY);
 
 
-//move playerIcon
+//move playerIcon with keyboard up and down
 document.addEventListener("keyup",(e)=>{
     if (e.key === "ArrowUp") {
         // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
-        console.log(playerIcon)
+        // console.log(playerIcon)
         console.log("Up")
-        
-        movePlayer(positionPlayerX,positionPlayerY);
+        movePlayerUp(positionPlayerX,positionPlayerY);
     } else if (e.key === "ArrowDown") {
-        console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+        // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+        console.log("Down")
+        movePlayerDown(positionPlayerX,positionPlayerY);
     }
 })
 
