@@ -4,4 +4,5 @@ body {
 
 canvas {
     border: solid;
+    background-image: url("../images/background.jpeg");
 }
