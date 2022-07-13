@@ -18,7 +18,7 @@ const addPlayerIcon = () => {
     shoeIcon = new Image();
     shoeIcon.src = "images/shoe_icon.png";
     shoeIcon.onload = () => {
-        playerIcon.drawImage(shoeIcon,0,0)
+        playerIcon.drawImage(shoeIcon,canvas.width/10,canvas.height/2)
     }
 }
 
