@@ -1,6 +1,7 @@
 // canvas references
 // tutorial https://www.youtube.com/c/ChrisCourses
 // viewport https://stackoverflow.com/questions/6011378/how-to-add-image-to-canvas
+// scrolling image https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Basic_animations
 
 
 const canvas = document.querySelector("canvas")
