@@ -5,121 +5,189 @@
 
 
 const canvas = document.querySelector("canvas")
-
-//set canvas to full screen
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-//grab canvas context
 const context = canvas.getContext("2d");
-
-
-// canvas backround
-const background = {
-    name: "Background",
-    imgSrc : "./images/background.jpeg",
-    posX : 0,
-    posY : 0,
-}
-
-//variables
-const startPlayerPosX = canvas.width/10
-const startPlayerPosY = canvas.height/2
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 //player info
 class Player {
     constructor() {
         this.name = "Floatshoe";
-        this.imgSrc = "images/shoe_icon.png";
-        this.posX = 0;
-        this.posY = 0;
-    }
-}
-
-class Game {
-    constructor(player) {
-        this.player = "";
-    }
-    //create player function
-    createPlayer = () => {
-        this.player = new Player();
-        console.log("Player is created.")
-    }
-    
-    // add image to screen
-    addImage = (object,posX,posY) => {
-        // console.log("inside addImage",object)
-        object.posX = posX;
-        object.posY = posY;
-        const image = new Image();
-        image.src = object.imgSrc;
-        image.onload = () => {
-            context.drawImage(image,object.posX,object.posY)
+        
+        this.speed = {
+            x: 0,
+            y: 0,
         }
-        console.log(object.name,"is added to the screen")
+        
+
+        const image = new Image();
+        image.src = "./images/shoe_icon.png";
+        image.onload = () => {
+            const scale = 0.95
+            this.image = image
+            this.width = image.width * scale
+            this.height = image.height * scale
+            this.position = {
+                x: canvas.width / 10,
+                y: canvas.height / 2 - this.height / 2 // to move in middle
+            }
+        }
+        
     }
-}
 
-//starting x 
-const startingX = canvas.width/10;
-const startingY = canvas.height/2;
-const shoeIconPath = "images/shoe_icon.png";
-let positionPlayerX = 0;
-let positionPlayerY = 0;
-
-// add player on page
-// const addPlayerIcon = (posX,posY) => {
-//     shoeIcon = new Image();
-//     shoeIcon.src = shoeIconPath;
-//     shoeIcon.onload = () => {
-//         playerIcon.drawImage(shoeIcon,posX,posY)
-//     }
-//     positionPlayerX = posX
-//     positionPlayerY = posY
-// }
-
-// addPlayerIcon(startingX,startingY);
-
-//move player function
-// player move up
-const movePlayerUp = (player) => {
-    let positionY = player.posY
-    positionPlayerY = oldY - 10;
-    imgNew = new Image();
-    imgNew.src = shoeIconPath;
-    imgNew.onload = () => {
-        playerIcon.clearRect(0, 0, canvas.width, canvas.height);
-        playerIcon.drawImage(imgNew,oldX,positionPlayerY)
-    }
-}
-// player move down
-const movePlayerDown = (posX,posY) => {
-    let oldX = posX;
-    let oldY = posY;
-    positionPlayerY = oldY + 10;
-    imgNew = new Image();
-    imgNew.src = shoeIconPath;
-    imgNew.onload = () => {
-        playerIcon.clearRect(0, 0, canvas.width, canvas.height);
-        playerIcon.drawImage(imgNew,oldX,positionPlayerY)
+    draw = () => {
+        // context.fillStyle = "red";
+        // context.fillRect(this.posX,this.posY,this.width,this.height)
+        if (this.image) {
+            context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)
+        }
     }
 }
 
 
+const player = new Player();
 
-//move playerIcon with keyboard up and down
-document.addEventListener("keyup",(e)=>{
-    if (e.key === "ArrowUp") {
-        // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
-        // console.log(playerIcon)
-        console.log("Up")
-        movePlayerUp(positionPlayerX,positionPlayerY);
-    } else if (e.key === "ArrowDown") {
-        // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
-        console.log("Down")
-        movePlayerDown(positionPlayerX,positionPlayerY);
+animate = () => {
+    requestAnimationFrame(animate);
+    context.fillStyle = "black"
+    context.fillRect(0,0,canvas.width,canvas.height)
+    player.draw()
+}
+
+animate()
+
+addEventListener("keydown", ({key}) => {
+    // console.log(key)
+    switch (key) {
+        case "ArrowUp" :
+            console.log(key)
+            break
+        case "ArrowDown" :
+            console.log(key)
+            break
     }
 })
+
+
+// //grab canvas context
+
+
+
+// // canvas backround
+// const background = {
+//     name: "Background",
+//     imgSrc : "./images/background.jpeg",
+//     posX : 0,
+//     posY : 0,
+// }
+
+// //variables
+// const startPlayerPosX = canvas.width/10
+// const startPlayerPosY = canvas.height/2
+
+
+
+// class Game {
+//     constructor(player) {
+//         this.player = "";
+//     }
+//     //create player function
+//     createPlayer = () => {
+//         this.player = new Player();
+//         console.log("Player is created.")
+//     }
+    
+//     // add image to screen
+//     addImage = (object,posX,posY) => {
+//         // console.log("inside addImage",object)
+//         object.posX = posX;
+//         object.posY = posY;
+//         const image = new Image();
+//         image.src = object.imgSrc;
+//         image.onload = () => {
+//             context.drawImage(image,object.posX,object.posY)
+//         }
+//         return image
+//         console.log(object.name,"is added to the screen")
+//     }
+//     moveImage = (image,direction) => {
+//         let oldPosX = image.posX;
+//         let oldPosY = image.posY;
+//         if (direction === "up") {
+//             image.posY -= 10;
+//         } else if (direction === "down") {
+//             image.posY += 10;
+//         } else if (direction === "left") {
+//             image.posX -= 10;
+//         }
+//     //     setTimeout(() => {
+//     //     context.clearRect(0,0,canvas.width,canvas.height)
+//     //     this.addImage(image,image.posX,image.posY)
+//     // },1000)
+
+//     }
+// }
+
+// //starting x 
+// const startingX = canvas.width/10;
+// const startingY = canvas.height/2;
+// const shoeIconPath = "images/shoe_icon.png";
+// let positionPlayerX = 0;
+// let positionPlayerY = 0;
+
+// // add player on page
+// // const addPlayerIcon = (posX,posY) => {
+// //     shoeIcon = new Image();
+// //     shoeIcon.src = shoeIconPath;
+// //     shoeIcon.onload = () => {
+// //         playerIcon.drawImage(shoeIcon,posX,posY)
+// //     }
+// //     positionPlayerX = posX
+// //     positionPlayerY = posY
+// // }
+
+// // addPlayerIcon(startingX,startingY);
+
+// //move player function
+// // player move up
+// const movePlayerUp = (player) => {
+//     let positionY = player.posY
+//     positionPlayerY = oldY - 10;
+//     imgNew = new Image();
+//     imgNew.src = shoeIconPath;
+//     imgNew.onload = () => {
+//         playerIcon.clearRect(0, 0, canvas.width, canvas.height);
+//         playerIcon.drawImage(imgNew,oldX,positionPlayerY)
+//     }
+// }
+// // player move down
+// const movePlayerDown = (posX,posY) => {
+//     let oldX = posX;
+//     let oldY = posY;
+//     positionPlayerY = oldY + 10;
+//     imgNew = new Image();
+//     imgNew.src = shoeIconPath;
+//     imgNew.onload = () => {
+//         playerIcon.clearRect(0, 0, canvas.width, canvas.height);
+//         playerIcon.drawImage(imgNew,oldX,positionPlayerY)
+//     }
+// }
+
+
+
+// //move playerIcon with keyboard up and down
+// document.addEventListener("keyup",(e)=>{
+//     if (e.key === "ArrowUp") {
+//         // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+//         // console.log(playerIcon)
+//         console.log("Up")
+//         movePlayerUp(positionPlayerX,positionPlayerY);
+//     } else if (e.key === "ArrowDown") {
+//         // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
+//         console.log("Down")
+//         movePlayerDown(positionPlayerX,positionPlayerY);
+//     }
+// })
 
 // // player class
 // class Player {
@@ -162,12 +230,42 @@ document.addEventListener("keyup",(e)=>{
 
 
 
-//create player
-const game = new Game()
+// //create player
+// const game = new Game()
 
-game.createPlayer()
-console.log(game.player)
-const backgroundImage = game.addImage(background,0,0)
-setTimeout( () => {
-const playerImage = game.addImage(game.player,startPlayerPosX,startPlayerPosY)
-})
+// game.createPlayer()
+// // console.log(game.player)
+// const backgroundImage = game.addImage(background,0,0)
+
+// setTimeout( () => {
+// const playerImage = game.addImage(game.player,startPlayerPosX,startPlayerPosY)
+// })
+// console.log(game.player)
+// game.moveImage(game.player,"up")
+// console.log(game.player)
+// console.log(context)
+
+
+
+// let x = 0;
+// //animate
+// const animate = () => {
+//     requestAnimationFrame(animate);
+//     // context.clearRect(0,0,canvas.width,canvas.height)
+//     const image = new Image();
+//         image.src = "./images/background.jpeg";
+//         image.onload = () => {
+//             context = canvas.getContext("2d");
+//             context.drawImage(image,x,0);
+//         }
+//     x-=5
+// }
+
+// // animate()
+// // 
+// const image = new Image();
+//         image.src = "./images/background.jpeg";
+//         image.onload = () => {
+//             context = canvas.getContext("2d");
+//             context.drawImage(image,x,0);
+//         }
