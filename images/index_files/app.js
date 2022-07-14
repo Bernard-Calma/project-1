@@ -63,9 +63,10 @@ animate = () => {
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
     player.update()
-    if (keys.ArrowUp.pressed && player.position.y >= 0) {
+
+    if (keys.ArrowUp.pressed && player.position.y >= player.height) {
         player.speed.y = -5;
-    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
+    } else if (keys.ArrowDown.pressed && player.position.y <= canvas.width) {
         player.speed.y = +5;
     } else {
         player.speed.y = 0;
@@ -80,6 +81,7 @@ addEventListener("keydown", ({key}) => {
     switch (key) {
         case "ArrowUp" :
             console.log(key)
+            player.speed.y = -5
             keys.ArrowUp.pressed = true
             break
         case "ArrowDown" :
