@@ -12,14 +12,10 @@ canvas.height = innerHeight;
 //player info
 class Player {
     constructor() {
-        this.name = "Floatshoe";
-        
         this.speed = {
             x: 0,
             y: 0,
         }
-        
-
         const image = new Image();
         image.src = "./images/shoe_icon.png";
         image.onload = () => {
@@ -38,32 +34,74 @@ class Player {
     draw = () => {
         // context.fillStyle = "red";
         // context.fillRect(this.posX,this.posY,this.width,this.height)
-        if (this.image) {
+        
             context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)
+        
+    }
+    update = () => {
+        if (this.image) {
+            this.draw()
+            this.position.y += this.speed.y
         }
     }
 }
 
 
 const player = new Player();
+// setup if keys are pressed
+const keys = {
+    ArrowUp: {
+        pressed: false
+    },
+    ArrowDown: {
+        pressed: false
+    }
+}
 
 animate = () => {
     requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
-    player.draw()
+    player.update()
+
+    if (keys.ArrowUp.pressed) {
+        player.speed.y = -5;
+    } else if (keys.ArrowDown.pressed) {
+        player.speed.y = +5;
+    } else {
+        player.speed.y = 0;
+    }
 }
 
 animate()
 
+//press key listener
 addEventListener("keydown", ({key}) => {
     // console.log(key)
     switch (key) {
         case "ArrowUp" :
             console.log(key)
+            player.speed.y = -5
+            keys.ArrowUp.pressed = true
             break
         case "ArrowDown" :
             console.log(key)
+            keys.ArrowDown.pressed = true
+            break
+    }
+})
+
+// release key listener
+addEventListener("keyup", ({key}) => {
+    // console.log(key)
+    switch (key) {
+        case "ArrowUp" :
+            console.log(key)
+            keys.ArrowUp.pressed = false
+            break
+        case "ArrowDown" :
+            console.log(key)
+            keys.ArrowDown.pressed = false
             break
     }
 })
