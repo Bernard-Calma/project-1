@@ -40,13 +40,13 @@ class Player {
         context.save()
 
         context.translate(
-            player.position.x + player.width / 2,
-            player.position.y + player.height /  2
+            this.position.x + this.width / 2,
+            this.position.y + this.height /  2
         )
         context.rotate(this.rotation)
         context.translate(
-            -player.position.x - player.width / 2,
-            -player.position.y - player.height/  2
+            -this.position.x - this.width / 2,
+            -this.position.y - this.height/  2
         )
         context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
         context.restore()
@@ -54,14 +54,40 @@ class Player {
     update = () => {
         if (this.image) {
             this.draw()
-            this.position.y += this.speed.y
+            // changes every movement
+            this.position.x += this.speed.x
+            this.position.y += this.speed.y  
         }
     }
 }
 
-
+// feet class
+class Feet extends Player{
+    constructor() {
+        super()
+        this.speed = {
+            x: -1,
+            y: 0,
+        }
+        this.rotation = 0;
+        const image = new Image();
+        image.src = "./images/feet_icon.png";
+        image.onload = () => {
+            const scale = 1
+            this.image = image
+            this.width = image.width * scale
+            this.height = image.height * scale
+            this.position = {
+                x: Math.random() * canvas.width,
+                y: canvas.height - this.height // to move in middle
+            }
+        }
+        
+    }
+}
 
 const player = new Player();
+const feets = [new Feet()]
 // setup if keys are pressed
 const keys = {
     ArrowUp: {
@@ -77,6 +103,10 @@ animate = () => {
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
     player.update()
+    feets.forEach(feet => {
+        feet.update()
+        console.log(feet.position)
+    })
     if (keys.ArrowUp.pressed && player.position.y >= 0) {
         player.speed.y = -7;
         player.rotation = 5
@@ -120,6 +150,14 @@ addEventListener("keyup", ({key}) => {
             break
     }
 })
+
+
+
+
+
+//feet
+// const feet = new Feet();
+
 
 
 // //grab canvas context
