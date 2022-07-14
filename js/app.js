@@ -16,6 +16,7 @@ class Player {
             x: 0,
             y: 0,
         }
+        this.rotation = 6;
         const image = new Image();
         image.src = "./images/shoe_icon.png";
         image.onload = () => {
@@ -34,9 +35,21 @@ class Player {
     draw = () => {
         // context.fillStyle = "red";
         // context.fillRect(this.posX,this.posY,this.width,this.height)
-        
-            context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)
-        
+
+        // context save and restore for rotating image
+        context.save()
+
+        context.translate(
+            player.position.x + player.width / 2,
+            player.position.y + player.height /  2
+        )
+        context.rotate(this.rotation)
+        context.translate(
+            -player.position.x - player.width / 2,
+            -player.position.y - player.height/  2
+        )
+        context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
+        context.restore()
     }
     update = () => {
         if (this.image) {
@@ -45,6 +58,7 @@ class Player {
         }
     }
 }
+
 
 
 const player = new Player();
@@ -64,11 +78,14 @@ animate = () => {
     context.fillRect(0,0,canvas.width,canvas.height)
     player.update()
     if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -5;
+        player.speed.y = -7;
+        player.rotation = 5
     } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
-        player.speed.y = +5;
+        player.speed.y = +7;
+        player.rotation = -6
     } else {
         player.speed.y = 0;
+        player.rotation = 6
     }
 }
 
@@ -79,11 +96,11 @@ addEventListener("keydown", ({key}) => {
     // console.log(key)
     switch (key) {
         case "ArrowUp" :
-            console.log(key)
+            // console.log(key)
             keys.ArrowUp.pressed = true
             break
         case "ArrowDown" :
-            console.log(key)
+            // console.log(key)
             keys.ArrowDown.pressed = true
             break
     }
