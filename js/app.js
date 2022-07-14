@@ -13,6 +13,15 @@ canvas.height = window.innerHeight;
 //grab canvas context
 const context = canvas.getContext("2d");
 
+
+// canvas backround
+const background = {
+    name: "Background",
+    imgSrc : "./images/background.jpeg",
+    posX : 0,
+    posY : 0,
+}
+
 //variables
 const startPlayerPosX = canvas.width/10
 const startPlayerPosY = canvas.height/2
@@ -20,7 +29,7 @@ const startPlayerPosY = canvas.height/2
 //player info
 class Player {
     constructor() {
-        this.name = "floatshoe";
+        this.name = "Floatshoe";
         this.imgSrc = "images/shoe_icon.png";
         this.posX = 0;
         this.posY = 0;
@@ -36,6 +45,7 @@ class Game {
         this.player = new Player();
         console.log("Player is created.")
     }
+    
     // add image to screen
     addImage = (object,posX,posY) => {
         // console.log("inside addImage",object)
@@ -58,17 +68,17 @@ let positionPlayerX = 0;
 let positionPlayerY = 0;
 
 // add player on page
-const addPlayerIcon = (posX,posY) => {
-    shoeIcon = new Image();
-    shoeIcon.src = shoeIconPath;
-    shoeIcon.onload = () => {
-        playerIcon.drawImage(shoeIcon,posX,posY)
-    }
-    positionPlayerX = posX
-    positionPlayerY = posY
-}
+// const addPlayerIcon = (posX,posY) => {
+//     shoeIcon = new Image();
+//     shoeIcon.src = shoeIconPath;
+//     shoeIcon.onload = () => {
+//         playerIcon.drawImage(shoeIcon,posX,posY)
+//     }
+//     positionPlayerX = posX
+//     positionPlayerY = posY
+// }
 
-addPlayerIcon(startingX,startingY);
+// addPlayerIcon(startingX,startingY);
 
 //move player function
 // player move up
@@ -157,4 +167,7 @@ const game = new Game()
 
 game.createPlayer()
 console.log(game.player)
-game.addImage(game.player,startPlayerPosX,startPlayerPosY)
+const backgroundImage = game.addImage(background,0,0)
+setTimeout( () => {
+const playerImage = game.addImage(game.player,startPlayerPosX,startPlayerPosY)
+})
