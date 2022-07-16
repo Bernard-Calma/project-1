@@ -6,8 +6,8 @@
 
 const canvas = document.querySelector("canvas")
 const context = canvas.getContext("2d");
-canvas.width = innerWidth;
-canvas.height = innerHeight;
+canvas.width = 1000; // changed to fixed width
+canvas.height = 800; // changed to fixed height
 
 //player info
 class Player {
