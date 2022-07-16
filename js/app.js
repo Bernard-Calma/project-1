@@ -16,6 +16,11 @@ const feets = [];
 //player info
 class Player {
     constructor() {
+        // added to catch error
+        this.position = {
+            x: canvas.width / 10,
+            y: canvas.height / 2 - this.height / 2 // to move in middle
+        }
         this.speed = {
             x: 0,
             y: 0,
@@ -111,20 +116,18 @@ class Background extends Player {
 }
 
 // feet class
-class Feet extends Player{
-    constructor(position = {
-        x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
-        y: canvas.height-245 // to move in middle
-            },
-        rotation = 0
-        )
-     {
-        super()
+// Might need to remove extend due to issue when spawn
+class Feet{
+    constructor(positionX = 0){
+        this.position = {
+            x: canvas.width / 2,
+            y: canvas.height / 2 - this.height / 2 // to move in middle
+        }
         this.speed = {
             x: -1, // -1 change after play button is pressed
             y: 0,
         }
-        this.rotation = rotation
+        this.rotation = 0;
         const image = new Image();
         image.src = "./images/feet_icon.png";
         image.onload = () => {
@@ -132,9 +135,50 @@ class Feet extends Player{
             this.image = image
             this.width = image.width * scale
             this.height = image.height * scale
-            this.position = position
+            let positionY = selectFromTwoNumbers(0,canvas.height-240)
+            // set position and rotation
+            //if position is top rotate image if position is bottom don't rotate.
+            if (positionY===0) {
+                positionY = 0
+                this.rotation = 3.15
+            } else {
+                positionY = canvas.height-240
+                this.rotation = 0
+            }
+            this.position = {
+                x: positionX,
+                y: positionY
+            }
         }
         
+    }
+
+    draw = () => {
+        // context.fillStyle = "red";
+        // context.fillRect(this.posX,this.posY,this.width,this.height)
+
+        // context save and restore for rotating image
+        context.save()
+
+        context.translate(
+            this.position.x + this.width / 2,
+            this.position.y + this.height /  2
+        )
+        context.rotate(this.rotation)
+        context.translate(
+            -this.position.x - this.width / 2,
+            -this.position.y - this.height/  2
+        )
+        context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
+        context.restore()
+    }
+    update = () => {
+        if (this.image) {
+            this.draw()
+            // changes every movement
+            this.position.x += this.speed.x
+            this.position.y += this.speed.y  
+        }
     }
 }
 
@@ -175,18 +219,8 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
 
 
 // make an array of feet to be able to create one easily
-for (i = 0; i <100; i++) {
-    // console.log("in",feets)
-    let y = selectFromTwoNumbers(0,canvas.height-240)
-    //if position is top rotate image if position is bottom don't rotate.
-    if (y===0) {
-        positionY = 0
-        setRotation = 3.15
-    } else {
-        positionY = canvas.height-240
-        setRotation = 0
-    }
-
+for (i = 0; i <5; i++) {
+    
     //x-axis distance for each feets
     // console.log("Feets Array Length",feets.length)
     if (feets.length === 0) {
@@ -200,24 +234,65 @@ for (i = 0; i <100; i++) {
         // console.log("POsitionX",positionX)
     }
 
-    feets.push(new Feet({
-        x: positionX, //Math.random() * canvas.width,// - random x axist
-        y:  positionY// random position on top or bottom
-            },
-        rotation = setRotation
-        )
-    )
-    // console.log("out",feets)
+    feets.push(new Feet(positionX))
+    
+    
+    
 }
-// need to make 
+
+animate = () => {
+    requestAnimationFrame(animate);
+    context.fillStyle = "black"
+    context.fillRect(0,0,canvas.width,canvas.height)
+    
+    if (keys.ArrowUp.pressed && player.position.y >= 0) {
+        player.speed.y = -7;
+        player.rotation = 5
+    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
+        player.speed.y = +7;
+        player.rotation = -6
+    } else {
+        player.speed.y = 0;
+        player.rotation = 6
+    }
+    background.update()
+    player.update()
+    
+    feets.forEach(feet => {
+        feet.update()
+        // console.log("Player X", player.position.x)
+        //     console.log("Feet X",feets[0].position.x)
+        //     console.log("Player Y", player.position.y)
+        //     console.log("Feet Y",feets[0].position.y)
+        // top right corner of player image     top left corner of feet image 
+        if(player.position.x === feets[0].position.x ||
+            // lower left corner of player image        lower left corner of feet image
+            player.position.y + player.height === feets[0].position.y + feets[0].height) {
+            console.log("Player X", player.position.x)
+            console.log("Player X + Width", player.position.x + player.width)
+            console.log("Feet X",feets[0].position.x)
+            console.log("Player Y", player.position.y)
+            console.log("Feet Y",feets[0].position.y)
+            // alert("STOP")
+        }
+        // feets.forEach( (feet) => {
+        //     console.log(feet.position)
+        // } )
+    // detect collision for each feet created
+    // if(player.position.x === true) {
+    //     // console.log(player.position.x)
+    // }
+        // console.log(player.position.x + player.width , "Y" , player.position.y + player.height)
+        // console.log(feets[0].position.x)
+        // if(player.position.y === feets[0].position.y) {
+        //     console.log(`${player.position.y} hits ${feets[0].position.y}`)
+        // }
 
 
-// console.log(feets)
-// const feets = [new Feet(),new Feet({
-//     x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
-//     y: -5 // to move in middle
-//         },
-//     rotation = 3.15)];
+    })
+}
+
+
 const background = new Background();
 const player = new Player();
 // setup if keys are pressed
@@ -230,29 +305,7 @@ const keys = {
     }
 }
 
-animate = () => {
-    requestAnimationFrame(animate);
-    context.fillStyle = "black"
-    context.fillRect(0,0,canvas.width,canvas.height)
-    
-    background.update()
-    
-    feets.forEach(feet => {
-        feet.update()
-        // console.log(feet.position)
-    })
-    player.update()
-    if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -7;
-        player.rotation = 5
-    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
-        player.speed.y = +7;
-        player.rotation = -6
-    } else {
-        player.speed.y = 0;
-        player.rotation = 6
-    }
-}
+
 
 animate()
 
