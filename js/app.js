@@ -78,7 +78,7 @@ class Feet extends Player{
             this.width = image.width * scale
             this.height = image.height * scale
             this.position = {
-                x: Math.random() * canvas.width,
+                x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
                 y: canvas.height - this.height // to move in middle
             }
         }
