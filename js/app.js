@@ -291,7 +291,10 @@ animate = () => {
             console.log("Feet 1 Y Position",feets[0].position.y)
             if(player.position.x + player.width >= feets[0].position.x &&
          // lower left corner of player image    bottom left corner of feet image
-                player.position.y <= feets[0].position.y + feets[0].height) {
+                player.position.y <= feets[0].position.y + feets[0].height &&
+                // add && for player already passed by feet
+                 // top right corner of player image       top right side of feet image
+                player.position.x + player.width <=  feets[0].position.x + feets[0].width ){
                     console.log("Player X", player.position.x + player.width, "Feet 1 X", feets[0].position.x)
                     console.log(" Player Y", player.position.y, " Feet 1 Y",feets[0].position.y)
                 alert("STOP")
