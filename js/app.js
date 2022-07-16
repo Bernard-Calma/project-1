@@ -97,7 +97,7 @@ class Background extends Player {
             this.position.y += this.speed.y  
             if (background.position.x <= -1300){
                     background.position.x = -100
-                    console.log(background.position.x)
+                    // console.log(background.position.x)
                 }
         } 
         // //show background from position
