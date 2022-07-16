@@ -281,7 +281,9 @@ animate = () => {
                 ) {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                location.reload()
+                    location.reload()
+                    alert("Game Over")
+                
             }
         }
 
@@ -298,6 +300,7 @@ animate = () => {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
                     location.reload()
+                    alert("Game Over")
             }
         }
 
