@@ -219,7 +219,7 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
 
 
 // make an array of feet to be able to create one easily
-for (i = 0; i <5; i++) {
+for (i = 0; i <50; i++) {
     
     //x-axis distance for each feets
     // console.log("Feets Array Length",feets.length)
