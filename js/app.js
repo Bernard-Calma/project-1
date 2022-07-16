@@ -86,8 +86,31 @@ class Feet extends Player{
     }
 }
 
+class Background extends Player {
+    constructor() {
+        super()
+        this.speed = {
+            x : 0,
+            y : 0
+        }
+        this.rotation = 0;
+        const image = new Image();
+        image.src = "./images/background.jpeg";
+        image.onload = () => {
+            this.image = image
+            this.width = canvas.width
+            this.height = canvas.height
+            this.position = {
+                x: 0,
+                y: 0 
+            }
+        }  
+    }
+}
+
+const background = new Background();
 const player = new Player();
-const feets = [new Feet()]
+const feets = [new Feet()];
 // setup if keys are pressed
 const keys = {
     ArrowUp: {
@@ -102,6 +125,7 @@ animate = () => {
     requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
+    background.update()
     player.update()
     feets.forEach(feet => {
         feet.update()
