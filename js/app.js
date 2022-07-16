@@ -269,35 +269,35 @@ animate = () => {
         // For feet on bottom screen
         // Colission for first feet test
         // console.log(feets[0].rotation)
-        if (feets[0].rotation === 0) {
+        if (feet.rotation === 0) {
             // top right corner of player image     top left side of feet image 
             // console.log("Feet 1 Y Position",feets[0].position.y)
-            if(player.position.x + player.width >= feets[0].position.x &&
+            if(player.position.x + player.width >= feet.position.x &&
          // lower left corner of player image    Top left corner of feet image
-                player.position.y >= feets[0].position.y &&
+                player.position.y >= feet.position.y &&
                // add && for player already passed by feet
                 // top right corner of player image       top right side of feet image
-               player.position.x + player.width <=  feets[0].position.x + feets[0].width
+               player.position.x + player.width <=  feet.position.x + feet.width
                 ) {
-                    console.log("Player X", player.position.x + player.width, "Feet 1 X", feets[0].position.x)
-                    console.log(" Player Y", player.position.y, " Feet 1 Y",feets[0].position.y)
-                alert("STOP")
+                    // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
+                    // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                location.reload()
             }
         }
 
           // For feet on bottom screen
-          if (feets[0].rotation === 3.15) {
+          if (feet.rotation === 3.15) {
             // top right corner of player image     top left side of feet image 
-            console.log("Feet 1 Y Position",feets[0].position.y)
-            if(player.position.x + player.width >= feets[0].position.x &&
+            // console.log("Feet 1 Y Position",feet.position.y)
+            if(player.position.x + player.width >= feet.position.x &&
          // lower left corner of player image    bottom left corner of feet image
-                player.position.y <= feets[0].position.y + feets[0].height &&
+                player.position.y <= feet.position.y + feet.height &&
                 // add && for player already passed by feet
                  // top right corner of player image       top right side of feet image
-                player.position.x + player.width <=  feets[0].position.x + feets[0].width ){
-                    console.log("Player X", player.position.x + player.width, "Feet 1 X", feets[0].position.x)
-                    console.log(" Player Y", player.position.y, " Feet 1 Y",feets[0].position.y)
-                alert("STOP")
+                player.position.x + player.width <=  feet.position.x + feet.width ){
+                    // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
+                    // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                    location.reload()
             }
         }
 
