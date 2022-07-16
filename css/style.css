@@ -1,10 +1,16 @@
 body {
+    text-align: center;
     margin: 0;
     width: 1000px;
     height: 800px;
     background-color: white;
 }
 canvas {
-    border: solid 1px white;
+    
+    border: solid 2px black;
     background-color: white;
+}
+
+ul {
+    text-align: start;
 }

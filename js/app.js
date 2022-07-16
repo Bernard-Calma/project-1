@@ -9,6 +9,8 @@ const context = canvas.getContext("2d");
 canvas.width = 700; // changed to fixed width
 canvas.height = 600; // changed to fixed height
 
+let positionX = 0 // position for each feets
+
 const feets = [];
 
 //player info
@@ -76,7 +78,7 @@ class Background extends Player {
         image.src = "./images/background.jpeg";
         image.onload = () => {
             this.image = image
-            this.width = canvas.width
+            this.width = image.width
             this.height = canvas.height
             this.position = {
                 x: 0,
@@ -88,12 +90,23 @@ class Background extends Player {
         context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
     }
     update = () => {
-        if (this.image) {
+        if (this.image != undefined) {
             this.draw()
             // changes every movement
             this.position.x += this.speed.x
             this.position.y += this.speed.y  
+            if (background.position.x <= -1300){
+                    background.position.x = -100
+                    console.log(background.position.x)
+                }
         } 
+        // //show background from position
+        // if (background.position.x <= -1300){
+        //     background.position.x = 0
+        //     console.log(background.position.x)
+        // }
+        // console.log(this.image)
+        
     }
 }
 
@@ -125,7 +138,7 @@ class Feet extends Player{
     }
 }
 
-//make a FIFO for feets
+//make a FIFO for feets NOT BEING USED
 class FeetsQueue {
     constructor() {
         this.feets = [];
@@ -149,6 +162,7 @@ class FeetsQueue {
     }
 }
 
+// function to select pick from two numbers
 const selectFromTwoNumbers = (firstNum , secondNum) => {
     randomTwoNumbers = Math.random()
     if (randomTwoNumbers <= 0.5) {
@@ -159,9 +173,8 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
     return randomTwoNumbers
 }
 
-const background = new Background();
+
 // make an array of feet to be able to create one easily
-let positionX = 0
 for (i = 0; i <100; i++) {
     // console.log("in",feets)
     let y = selectFromTwoNumbers(0,canvas.height-240)
@@ -175,17 +188,16 @@ for (i = 0; i <100; i++) {
     }
 
     //x-axis distance for each feets
-    console.log("Feets Array Length",feets.length)
- 
+    // console.log("Feets Array Length",feets.length)
     if (feets.length === 0) {
-        console.log("Empty Array")
+        // console.log("Empty Array")
         positionX = canvas.width / 2
-        console.log("POsitionX",positionX)
+        // console.log("POsitionX",positionX)
     } else {
         // console.log(feets)
-        // console.log("Previous Feet Position",feets[0])
+        // add a fix distance for each feet
         positionX = positionX + 250
-        console.log("POsitionX",positionX)
+        // console.log("POsitionX",positionX)
     }
 
     feets.push(new Feet({
@@ -200,12 +212,13 @@ for (i = 0; i <100; i++) {
 // need to make 
 
 
-console.log(feets)
+// console.log(feets)
 // const feets = [new Feet(),new Feet({
 //     x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
 //     y: -5 // to move in middle
 //         },
 //     rotation = 3.15)];
+const background = new Background();
 const player = new Player();
 // setup if keys are pressed
 const keys = {
@@ -221,12 +234,14 @@ animate = () => {
     requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
+    
     background.update()
-    player.update()
+    
     feets.forEach(feet => {
         feet.update()
         // console.log(feet.position)
     })
+    player.update()
     if (keys.ArrowUp.pressed && player.position.y >= 0) {
         player.speed.y = -7;
         player.rotation = 5
@@ -261,11 +276,11 @@ addEventListener("keyup", ({key}) => {
     // console.log(key)
     switch (key) {
         case "ArrowUp" :
-            console.log(key)
+            // console.log(key)
             keys.ArrowUp.pressed = false
             break
         case "ArrowDown" :
-            console.log(key)
+            // console.log(key)
             keys.ArrowDown.pressed = false
             break
     }
