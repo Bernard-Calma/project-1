@@ -125,7 +125,7 @@ class Feet extends Player{
     }
 }
 
-const getRotation = (firstNum , secondNum) => {
+const selectFromTwoNumbers = (firstNum , secondNum) => {
     randomTwoNumbers = Math.random()
     if (randomTwoNumbers <= 0.5) {
         randomTwoNumbers = firstNum
@@ -141,7 +141,7 @@ for (i = 0; i <10; i++) {
         x: Math.random() * canvas.width,// - changed after play anvas.width / 2, 
         y: -5 // to move in middle
             },
-        rotation = getRotation(0, 3.15)
+        rotation = selectFromTwoNumbers(0, 3.15)
         )
     )
 }
