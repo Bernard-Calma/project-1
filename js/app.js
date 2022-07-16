@@ -269,15 +269,16 @@ animate = () => {
         // For feet on bottom screen
         // Colission for first feet test
         // console.log(feets[0].rotation)
+        // added fix number to adjust collision
         if (feet.rotation === 0) {
             // top right corner of player image     top left side of feet image 
             // console.log("Feet 1 Y Position",feets[0].position.y)
-            if(player.position.x + player.width >= feet.position.x &&
+            if(player.position.x + player.width - 17 >= feet.position.x &&
          // lower left corner of player image    Top left corner of feet image
-                player.position.y + player.height >= feet.position.y&&
+                player.position.y + 40 >= feet.position.y&&
                // add && for player already passed by feet
                 // top right corner of player image       top right side of feet image
-               player.position.x <=  feet.position.x + feet.width
+               player.position.x - 5 <=  feet.position.x + feet.width
                 ) {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
@@ -291,12 +292,12 @@ animate = () => {
           if (feet.rotation === 3.15) {
             // top right corner of player image     top left side of feet image 
             // console.log("Feet 1 Y Position",feet.position.y)
-            if(player.position.x + player.width >= feet.position.x &&
+            if(player.position.x + player.width - 10>= feet.position.x &&
          // lower left corner of player image    bottom left corner of feet image
-                player.position.y <= feet.position.y + feet.height &&
+                player.position.y + 25 <= feet.position.y + feet.height &&
                 // add && for player already passed by feet
                  // top right corner of player image       top right side of feet image
-                player.position.x + player.width <=  feet.position.x + feet.width ){
+                player.position.x + player.width <=  feet.position.x + feet.width + 30){
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
                     location.reload()
