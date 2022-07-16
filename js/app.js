@@ -68,7 +68,7 @@ class Background extends Player {
     constructor(position) {
         super()
         this.speed = {
-            x : -5,
+            x : -1,
             y : 0
         }
         this.rotation = 0;
@@ -136,12 +136,21 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
 }
 
 const background = new Background();
-for (i = 0; i <10; i++) {
+for (i = 0; i <5; i++) {
+    let y = selectFromTwoNumbers(0,canvas.height-240)
+    if (y===0) {
+        positionY = 0
+        setRotation = 3.15
+    } else {
+        positionY = canvas.height-240
+        setRotation = 0
+    }
+
     feets.push(new Feet({
-        x: Math.random() * canvas.width,// - changed after play anvas.width / 2, 
-        y: -5 // to move in middle
+        x: Math.random() * canvas.width,// - random x axist
+        y:  positionY// random position on top or bottom
             },
-        rotation = selectFromTwoNumbers(0, 3.15)
+        rotation = setRotation
         )
     )
 }
