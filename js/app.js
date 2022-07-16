@@ -75,7 +75,7 @@ class Background extends Player {
     constructor(position) {
         super()
         this.speed = {
-            x : -1,
+            x : -2,
             y : 0
         }
         this.rotation = 0;
@@ -124,7 +124,7 @@ class Feet{
             y: canvas.height / 2 - this.height / 2 // to move in middle
         }
         this.speed = {
-            x: -1, // -1 change after play button is pressed
+            x: -2, // -1 change after play button is pressed
             y: 0,
         }
         this.rotation = 0.0001; //changed from 0 to catch error for collision
