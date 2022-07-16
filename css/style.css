@@ -2,8 +2,9 @@ body {
     margin: 0;
     width: 1000px;
     height: 800px;
-    background-color: black;
+    background-color: white;
 }
 canvas {
     border: solid 1px white;
+    background-color: white;
 }
