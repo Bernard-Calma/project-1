@@ -66,7 +66,7 @@ class Feet extends Player{
     constructor() {
         super()
         this.speed = {
-            x: -1,
+            x: 0, // -1 change after play button is pressed
             y: 0,
         }
         this.rotation = 0;
