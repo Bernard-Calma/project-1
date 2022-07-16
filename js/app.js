@@ -125,6 +125,30 @@ class Feet extends Player{
     }
 }
 
+//make a FIFO for feets
+class FeetsQueue {
+    constructor() {
+        this.feets = [];
+    }
+
+    enqueue = (item) => {
+        this.items.push(item);
+    }
+
+    dequeue = () => {
+        return this.item.shift();
+    }
+
+    peek() {
+        if (this.item[0]) null;
+        return this.item[0];
+    }
+
+    isEmpty() {
+        return this.getSize() === 0;
+    }
+}
+
 const selectFromTwoNumbers = (firstNum , secondNum) => {
     randomTwoNumbers = Math.random()
     if (randomTwoNumbers <= 0.5) {
@@ -136,8 +160,12 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
 }
 
 const background = new Background();
-for (i = 0; i <5; i++) {
+// make an array of feet to be able to create one easily
+let positionX = 0
+for (i = 0; i <100; i++) {
+    // console.log("in",feets)
     let y = selectFromTwoNumbers(0,canvas.height-240)
+    //if position is top rotate image if position is bottom don't rotate.
     if (y===0) {
         positionY = 0
         setRotation = 3.15
@@ -146,14 +174,31 @@ for (i = 0; i <5; i++) {
         setRotation = 0
     }
 
+    //x-axis distance for each feets
+    console.log("Feets Array Length",feets.length)
+ 
+    if (feets.length === 0) {
+        console.log("Empty Array")
+        positionX = canvas.width / 2
+        console.log("POsitionX",positionX)
+    } else {
+        // console.log(feets)
+        // console.log("Previous Feet Position",feets[0])
+        positionX = positionX + 250
+        console.log("POsitionX",positionX)
+    }
+
     feets.push(new Feet({
-        x: Math.random() * canvas.width,// - random x axist
+        x: positionX, //Math.random() * canvas.width,// - random x axist
         y:  positionY// random position on top or bottom
             },
         rotation = setRotation
         )
     )
+    // console.log("out",feets)
 }
+// need to make 
+
 
 console.log(feets)
 // const feets = [new Feet(),new Feet({
