@@ -6,12 +6,8 @@
 
 const canvas = document.querySelector("canvas")
 const context = canvas.getContext("2d");
-canvas.width = 700; // changed to fixed width
-canvas.height = 600; // changed to fixed height
-
-let positionX = 0 // position for each feets
-
-const feets = [];
+canvas.width = innerWidth;
+canvas.height = innerHeight;
 
 //player info
 class Player {
@@ -20,7 +16,6 @@ class Player {
             x: 0,
             y: 0,
         }
-        this.rotation = 6;
         const image = new Image();
         image.src = "./images/shoe_icon.png";
         image.onload = () => {
@@ -39,186 +34,19 @@ class Player {
     draw = () => {
         // context.fillStyle = "red";
         // context.fillRect(this.posX,this.posY,this.width,this.height)
-
-        // context save and restore for rotating image
-        context.save()
-
-        context.translate(
-            this.position.x + this.width / 2,
-            this.position.y + this.height /  2
-        )
-        context.rotate(this.rotation)
-        context.translate(
-            -this.position.x - this.width / 2,
-            -this.position.y - this.height/  2
-        )
-        context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
-        context.restore()
+        
+            context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)
+        
     }
     update = () => {
         if (this.image) {
             this.draw()
-            // changes every movement
-            this.position.x += this.speed.x
-            this.position.y += this.speed.y  
+            this.position.y += this.speed.y
         }
     }
 }
 
-//background class
-class Background extends Player {
-    constructor(position) {
-        super()
-        this.speed = {
-            x : -1,
-            y : 0
-        }
-        this.rotation = 0;
-        const image = new Image();
-        image.src = "./images/background.jpeg";
-        image.onload = () => {
-            this.image = image
-            this.width = image.width
-            this.height = canvas.height
-            this.position = {
-                x: 0,
-                y: 0 
-            }
-        }  
-    }
-    draw = () => {
-        context.drawImage(this.image, this.position.x,this.position.y,this.width,this.height)     
-    }
-    update = () => {
-        if (this.image != undefined) {
-            this.draw()
-            // changes every movement
-            this.position.x += this.speed.x
-            this.position.y += this.speed.y  
-            if (background.position.x <= -1300){
-                    background.position.x = -100
-                    // console.log(background.position.x)
-                }
-        } 
-        // //show background from position
-        // if (background.position.x <= -1300){
-        //     background.position.x = 0
-        //     console.log(background.position.x)
-        // }
-        // console.log(this.image)
-        
-    }
-}
 
-// feet class
-class Feet extends Player{
-    constructor(position = {
-        x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
-        y: canvas.height-245 // to move in middle
-            },
-        rotation = 0
-        )
-     {
-        super()
-        this.speed = {
-            x: -1, // -1 change after play button is pressed
-            y: 0,
-        }
-        this.rotation = rotation
-        const image = new Image();
-        image.src = "./images/feet_icon.png";
-        image.onload = () => {
-            const scale = 1
-            this.image = image
-            this.width = image.width * scale
-            this.height = image.height * scale
-            this.position = position
-        }
-        
-    }
-}
-
-//make a FIFO for feets NOT BEING USED
-class FeetsQueue {
-    constructor() {
-        this.feets = [];
-    }
-
-    enqueue = (item) => {
-        this.items.push(item);
-    }
-
-    dequeue = () => {
-        return this.item.shift();
-    }
-
-    peek() {
-        if (this.item[0]) null;
-        return this.item[0];
-    }
-
-    isEmpty() {
-        return this.getSize() === 0;
-    }
-}
-
-// function to select pick from two numbers
-const selectFromTwoNumbers = (firstNum , secondNum) => {
-    randomTwoNumbers = Math.random()
-    if (randomTwoNumbers <= 0.5) {
-        randomTwoNumbers = firstNum
-    } else if (randomTwoNumbers > 0.5) {
-        randomTwoNumbers = secondNum
-    }
-    return randomTwoNumbers
-}
-
-
-// make an array of feet to be able to create one easily
-for (i = 0; i <100; i++) {
-    // console.log("in",feets)
-    let y = selectFromTwoNumbers(0,canvas.height-240)
-    //if position is top rotate image if position is bottom don't rotate.
-    if (y===0) {
-        positionY = 0
-        setRotation = 3.15
-    } else {
-        positionY = canvas.height-240
-        setRotation = 0
-    }
-
-    //x-axis distance for each feets
-    // console.log("Feets Array Length",feets.length)
-    if (feets.length === 0) {
-        // console.log("Empty Array")
-        positionX = canvas.width / 2
-        // console.log("POsitionX",positionX)
-    } else {
-        // console.log(feets)
-        // add a fix distance for each feet
-        positionX = positionX + 250
-        // console.log("POsitionX",positionX)
-    }
-
-    feets.push(new Feet({
-        x: positionX, //Math.random() * canvas.width,// - random x axist
-        y:  positionY// random position on top or bottom
-            },
-        rotation = setRotation
-        )
-    )
-    // console.log("out",feets)
-}
-// need to make 
-
-
-// console.log(feets)
-// const feets = [new Feet(),new Feet({
-//     x: canvas.width / 2, //Math.random() * canvas.width, - changed after play
-//     y: -5 // to move in middle
-//         },
-//     rotation = 3.15)];
-const background = new Background();
 const player = new Player();
 // setup if keys are pressed
 const keys = {
@@ -234,23 +62,14 @@ animate = () => {
     requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
-    
-    background.update()
-    
-    feets.forEach(feet => {
-        feet.update()
-        // console.log(feet.position)
-    })
     player.update()
-    if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -7;
-        player.rotation = 5
-    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
-        player.speed.y = +7;
-        player.rotation = -6
+
+    if (keys.ArrowUp.pressed && player.position.y >= player.height) {
+        player.speed.y = -5;
+    } else if (keys.ArrowDown.pressed && player.position.y <= canvas.width) {
+        player.speed.y = +5;
     } else {
         player.speed.y = 0;
-        player.rotation = 6
     }
 }
 
@@ -261,11 +80,12 @@ addEventListener("keydown", ({key}) => {
     // console.log(key)
     switch (key) {
         case "ArrowUp" :
-            // console.log(key)
+            console.log(key)
+            player.speed.y = -5
             keys.ArrowUp.pressed = true
             break
         case "ArrowDown" :
-            // console.log(key)
+            console.log(key)
             keys.ArrowDown.pressed = true
             break
     }
@@ -276,23 +96,15 @@ addEventListener("keyup", ({key}) => {
     // console.log(key)
     switch (key) {
         case "ArrowUp" :
-            // console.log(key)
+            console.log(key)
             keys.ArrowUp.pressed = false
             break
         case "ArrowDown" :
-            // console.log(key)
+            console.log(key)
             keys.ArrowDown.pressed = false
             break
     }
 })
-
-
-
-
-
-//feet
-// const feet = new Feet();
-
 
 
 // //grab canvas context
