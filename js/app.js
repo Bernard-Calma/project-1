@@ -116,7 +116,7 @@ class Background extends Player {
 }
 
 // feet class
-// Might need to remove extend due to issue when spawn
+// removed extend due to issue when spawn
 class Feet{
     constructor(positionX = 0){
         this.position = {
@@ -127,7 +127,7 @@ class Feet{
             x: -1, // -1 change after play button is pressed
             y: 0,
         }
-        this.rotation = 0;
+        this.rotation = 0.0001; //changed from 0 to catch error for collision
         const image = new Image();
         image.src = "./images/feet_icon.png";
         image.onload = () => {
@@ -264,30 +264,35 @@ animate = () => {
         //     console.log("Feet X",feets[0].position.x)
         //     console.log("Player Y", player.position.y)
         //     console.log("Feet Y",feets[0].position.y)
-        // top right corner of player image     top left corner of feet image 
-        if(player.position.x === feets[0].position.x ||
-            // lower left corner of player image        lower left corner of feet image
-            player.position.y + player.height === feets[0].position.y + feets[0].height) {
-            console.log("Player X", player.position.x)
-            console.log("Player X + Width", player.position.x + player.width)
-            console.log("Feet X",feets[0].position.x)
-            console.log("Player Y", player.position.y)
-            console.log("Feet Y",feets[0].position.y)
-            // alert("STOP")
-        }
-        // feets.forEach( (feet) => {
-        //     console.log(feet.position)
-        // } )
-    // detect collision for each feet created
-    // if(player.position.x === true) {
-    //     // console.log(player.position.x)
-    // }
-        // console.log(player.position.x + player.width , "Y" , player.position.y + player.height)
-        // console.log(feets[0].position.x)
-        // if(player.position.y === feets[0].position.y) {
-        //     console.log(`${player.position.y} hits ${feets[0].position.y}`)
-        // }
 
+        ///// COLLISION CODE ******* ///////
+        // For feet on bottom screen
+        // Colission for first feet test
+        // console.log(feets[0].rotation)
+        if (feets[0].rotation === 0) {
+            // top right corner of player image     top left side of feet image 
+            // console.log("Feet 1 Y Position",feets[0].position.y)
+            if(player.position.x + player.width >= feets[0].position.x &&
+         // lower left corner of player image    Top left corner of feet image
+                player.position.y >= feets[0].position.y) {
+                    console.log("Player X", player.position.x + player.width, "Feet 1 X", feets[0].position.x)
+                    console.log(" Player Y", player.position.y, " Feet 1 Y",feets[0].position.y)
+                alert("STOP")
+            }
+        }
+
+          // For feet on bottom screen
+          if (feets[0].rotation === 3.15) {
+            // top right corner of player image     top left side of feet image 
+            console.log("Feet 1 Y Position",feets[0].position.y)
+            if(player.position.x + player.width >= feets[0].position.x &&
+         // lower left corner of player image    bottom left corner of feet image
+                player.position.y <= feets[0].position.y + feets[0].height) {
+                    console.log("Player X", player.position.x + player.width, "Feet 1 X", feets[0].position.x)
+                    console.log(" Player Y", player.position.y, " Feet 1 Y",feets[0].position.y)
+                alert("STOP")
+            }
+        }
 
     })
 }
