@@ -251,8 +251,9 @@ for (i = 0; i <50; i++) {
     
 }
 
+let animation
 animate = () => {
-    requestAnimationFrame(animate);
+    animation = requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
     
@@ -293,8 +294,9 @@ animate = () => {
                 ) {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    location.reload()
-                    alert("Game Over")
+                    cancelAnimationFrame(animation)
+                    // location.reload()
+                    // alert("Game Over")
                 
             }
         }
@@ -311,8 +313,9 @@ animate = () => {
                 player.position.x + player.width <=  feet.position.x + feet.width + 30){
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    location.reload()
-                    alert("Game Over")
+                    cancelAnimationFrame(animation)
+                    // location.reload()
+                    // alert("Game Over")
             }
         }
 
