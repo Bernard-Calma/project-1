@@ -11,6 +11,16 @@ canvas.height = 600; // changed to fixed height
 
 let positionX = 0 // position for each feets
 
+//menu variables
+const menuPosition = {
+    x: canvas.width / 8,
+    y: canvas.height / 8
+}
+const menuDims = {
+    width: canvas.width * 3/4 ,
+    height: canvas.height * 3/4 
+}
+
 const feets = [];
 
 //player info
@@ -206,6 +216,7 @@ class FeetsQueue {
     }
 }
 
+
 // function to select pick from two numbers
 const selectFromTwoNumbers = (firstNum , secondNum) => {
     randomTwoNumbers = Math.random()
@@ -294,7 +305,7 @@ animate = () => {
             // console.log("Feet 1 Y Position",feet.position.y)
             if(player.position.x + player.width - 10>= feet.position.x &&
          // lower left corner of player image    bottom left corner of feet image
-                player.position.y + 25 <= feet.position.y + feet.height &&
+                player.position.y + 25 <= feet.position.y + feet.height - 5 &&
                 // add && for player already passed by feet
                  // top right corner of player image       top right side of feet image
                 player.position.x + player.width <=  feet.position.x + feet.width + 30){
@@ -306,6 +317,18 @@ animate = () => {
         }
 
     })
+
+    
+    context.beginPath();
+    context.lineWidth = "6"
+    context.strokeStyle = "darkblue"
+    context.rect(canvas.width/8, canvas.height/8, canvas.width * 3/4 , canvas.height * 3/4 )
+    context.stroke();
+    context.closePath();
+
+    context.fillStyle = ("white");
+    context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
+
 }
 
 
