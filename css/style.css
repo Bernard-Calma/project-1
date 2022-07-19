@@ -5,6 +5,7 @@ body {
     height: 800px;
     background-color: white;
 }
+
 canvas {
     
     border: solid 2px black;
@@ -13,4 +14,21 @@ canvas {
 
 ul {
     text-align: start;
+}
+
+.menu-ui {
+    border: solid black;
+}
+
+.menu-top {
+    background-color: gray;
+    border: solid black
+}
+
+.menu-main {
+    border: solid black;
+}
+
+.menu-top p {
+    font-size: 30px;
 }

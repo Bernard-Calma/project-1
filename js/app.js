@@ -12,6 +12,12 @@ canvas.height = 600; // changed to fixed height
 let positionX = 0 // position for each feets
 
 //menu variables
+const menuUI = document.querySelector(".menu-ui");
+const menuTop = document.querySelector(".menu-top");
+const menuMain = document.querySelector(".menu-main");
+const btnPlay = document.querySelector("#btn-play");
+const btnHowTo = document.querySelector("#btn-howto")
+
 const menuPosition = {
     x: canvas.width / 8,
     y: canvas.height / 8
@@ -323,6 +329,8 @@ animate = () => {
 
     
    
+
+
     // white background
     context.fillStyle = "white";
     context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
