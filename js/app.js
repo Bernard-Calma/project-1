@@ -319,15 +319,32 @@ animate = () => {
     })
 
     
-    context.beginPath();
-    context.lineWidth = "6"
-    context.strokeStyle = "darkblue"
-    context.rect(canvas.width/8, canvas.height/8, canvas.width * 3/4 , canvas.height * 3/4 )
-    context.stroke();
-    context.closePath();
-
-    context.fillStyle = ("white");
+   
+    // white background
+    context.fillStyle = "white";
     context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
+    // blue border
+    context.beginPath();
+    context.lineWidth = "3"
+    context.strokeStyle = "darkblue"
+    context.rect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
+    context.stroke();
+    // title menu border background
+    context.fillStyle = "gray";
+    context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, 100)
+    // title menu
+    context.fillStyle = "Blue"
+    context.font = "50px Verdana";
+    context.fillText("Menu",(menuPosition.x + menuDims.width) / 2 - 20, menuPosition.y + 70 )
+
+    context.closePath();
+    context.beginPath();
+    // title menu border - bottom
+    context.moveTo(menuPosition.x ,menuPosition.y + 100)
+    context.lineTo(menuPosition.x + menuDims.width , menuPosition.y + 100)
+    context.stroke()
+    
+    
 
 }
 
