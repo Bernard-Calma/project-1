@@ -336,28 +336,27 @@ canvas.addEventListener("mouseup",() => {
         // console.log("Unclicked", player.speed.y)
 
 })
-
-const pTag = document.querySelector("p")
+console.log(canvas)
 //touch event for mobile
-pTag.addEventListener("ontouchstart",() => {
+canvas.addEventListener("touchstart",() => { 
     keys.ArrowUp.pressed = true 
-    console.log("Clicked", player.speed.y)  
+    // console.log("Unclicked", player.speed.y)
+
 })
-pTag.addEventListener("ontouchend",() => {
+canvas.addEventListener("touchend",() => {
     keys.ArrowUp.pressed = false 
-    console.log("Unclicked", player.speed.y)
+    // console.log("Unclicked", player.speed.y)
 
 })
-
 
 // play button event listener
 btnPlay.addEventListener("click",()=>{
-    console.log(btnPlay.innerText," is clicked")
+    // console.log(btnPlay.innerText," is clicked")
     menuUI.style.display = "none";
     if (btnPlay.innerText === "Restart") {
         location.reload()
     } else {
-        console.log(btnPlay.innerText," is clicked")
+        // console.log(btnPlay.innerText," is clicked")
         player.speed.y = 2
         background.speed.x = -2
         feets.forEach(feet => {
