@@ -1,4 +1,5 @@
 body {
+    
     text-align: center;
     margin: 0;
     width: 1000px;
@@ -7,7 +8,6 @@ body {
 }
 
 canvas {
-    
     border: solid 2px black;
     background-color: white;
 }
@@ -16,19 +16,38 @@ ul {
     text-align: start;
 }
 
+button {
+    font-size: 30px;
+}
+
 .menu-ui {
-    border: solid black;
+    display: flex;
+    flex-direction: column;
+    align-content:space-between;
 }
 
 .menu-top {
+    
     background-color: gray;
     border: solid black
 }
 
 .menu-main {
+    height: inherit;
+    background-color: white;
     border: solid black;
 }
 
+.buttons {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+
+    
+}
 .menu-top p {
     font-size: 30px;
 }

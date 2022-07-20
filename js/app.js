@@ -18,6 +18,8 @@ const menuMain = document.querySelector(".menu-main");
 const btnPlay = document.querySelector("#btn-play");
 const btnHowTo = document.querySelector("#btn-howto")
 
+
+
 const menuPosition = {
     x: canvas.width / 8,
     y: canvas.height / 8
@@ -329,31 +331,37 @@ animate = () => {
 
     
    
+    
+    menuUI.style.position = "absolute";
+    menuUI.style.top = "100px";
+    menuUI.style.left = "300px";
+    menuUI.style.width = `${canvas.width/2}px`
+    menuUI.style.height = `${canvas.height/2}px`
+   
+    
+    // // white background
+    // context.fillStyle = "white";
+    // context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
+    // // blue border
+    // context.beginPath();
+    // context.lineWidth = "3"
+    // context.strokeStyle = "darkblue"
+    // context.rect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
+    // context.stroke();
+    // // title menu border background
+    // context.fillStyle = "gray";
+    // context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, 100)
+    // // title menu
+    // context.fillStyle = "Blue"
+    // context.font = "50px Verdana";
+    // context.fillText("Menu",(menuPosition.x + menuDims.width) / 2 - 20, menuPosition.y + 70 )
 
-
-    // white background
-    context.fillStyle = "white";
-    context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
-    // blue border
-    context.beginPath();
-    context.lineWidth = "3"
-    context.strokeStyle = "darkblue"
-    context.rect(menuPosition.x, menuPosition.y, menuDims.width, menuDims.height )
-    context.stroke();
-    // title menu border background
-    context.fillStyle = "gray";
-    context.fillRect(menuPosition.x, menuPosition.y, menuDims.width, 100)
-    // title menu
-    context.fillStyle = "Blue"
-    context.font = "50px Verdana";
-    context.fillText("Menu",(menuPosition.x + menuDims.width) / 2 - 20, menuPosition.y + 70 )
-
-    context.closePath();
-    context.beginPath();
-    // title menu border - bottom
-    context.moveTo(menuPosition.x ,menuPosition.y + 100)
-    context.lineTo(menuPosition.x + menuDims.width , menuPosition.y + 100)
-    context.stroke()
+    // context.closePath();
+    // context.beginPath();
+    // // title menu border - bottom
+    // context.moveTo(menuPosition.x ,menuPosition.y + 100)
+    // context.lineTo(menuPosition.x + menuDims.width , menuPosition.y + 100)
+    // context.stroke()
     
     
 
