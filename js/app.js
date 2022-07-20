@@ -15,6 +15,7 @@ let positionX = 0 // position for each feets
 const menuUI = document.querySelector(".menu-ui");
 const menuTop = document.querySelector(".menu-top");
 const menuMain = document.querySelector(".menu-main");
+const buttons = document.querySelector(".buttons")
 const btnPlay = document.querySelector("#btn-play");
 const btnHowTo = document.querySelector("#btn-howto")
 menuUI.style.position = "absolute";
@@ -33,6 +34,10 @@ const menuDims = {
     height: canvas.height * 3/4 
 }
 
+// variable for animation to stop and start
+let animation
+
+// array for holding each feet obstacles
 const feets = [];
 
 //player info
@@ -263,8 +268,9 @@ for (i = 0; i <50; i++) {
     
 }
 
-let animation
+
 animate = () => {
+    
     animation = requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
@@ -349,7 +355,7 @@ const keys = {
 
 
 
-animate()
+
 
 //press key listener
 addEventListener("keydown", ({key}) => {
@@ -379,4 +385,16 @@ addEventListener("keyup", ({key}) => {
             keys.ArrowDown.pressed = false
             break
     }
+})
+
+// play button event listener
+btnPlay.addEventListener("click",(e)=>{
+    menuUI.style.display = "none";
+    console.log(e.target.innerText," is clicked")
+    animate()
+})
+
+// How To Play button event listener
+btnHowTo.addEventListener("click",(e)=>{
+    console.log(e.target.innerText," is clicked")
 })
