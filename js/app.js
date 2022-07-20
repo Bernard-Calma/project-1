@@ -327,51 +327,16 @@ animate = () => {
 
 
 
-canvas.addEventListener("click",() => {
-    
+canvas.addEventListener("mousedown",() => {
         keys.ArrowUp.pressed = true 
         console.log("Clicked", player.speed.y)
 
     
 })
-
 canvas.addEventListener("mouseup",() => {
-    
-    setTimeout(() => {
         keys.ArrowUp.pressed = false 
         console.log("Unclicked", player.speed.y)
-    }, 100);
-})
 
-
-//press key listener
-addEventListener("keydown", ({key}) => {
-    // console.log(key)
-    switch (key) {
-        case "ArrowUp" :
-            // console.log(key)
-            keys.ArrowUp.pressed = true
-            break
-        case "ArrowDown" :
-            // console.log(key)
-            keys.ArrowDown.pressed = true
-            break
-    }
-})
-
-// release key listener
-addEventListener("keyup", ({key}) => {
-    // console.log(key)
-    switch (key) {
-        case "ArrowUp" :
-            // console.log(key)
-            keys.ArrowUp.pressed = false
-            break
-        case "ArrowDown" :
-            // console.log(key)
-            keys.ArrowDown.pressed = false
-            break
-    }
 })
 
 // play button event listener
