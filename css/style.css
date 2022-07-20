@@ -1,16 +1,58 @@
 body {
+    
     text-align: center;
     margin: 0;
     width: 1000px;
     height: 800px;
     background-color: white;
 }
+
 canvas {
-    
     border: solid 2px black;
     background-color: white;
 }
 
 ul {
     text-align: start;
+}
+
+button {
+    background-color: gray;
+    font-size: 30px;
+    color: white;
+    font-weight: bold;
+    border: solid 4px black;
+}
+
+.menu-ui {
+    display: flex;
+    flex-direction: column;
+    align-content:space-between;
+}
+
+.menu-top {
+    
+    background-color: gray;
+    border: solid black
+}
+
+.menu-main {
+    height: inherit;
+    background-color: white;
+    border: solid black;
+}
+
+.buttons {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: space-around;
+
+    
+}
+.menu-top p {
+    font-size: 40px;
+    font-weight: bold;
 }

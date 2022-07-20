@@ -11,7 +11,33 @@ canvas.height = 600; // changed to fixed height
 
 let positionX = 0 // position for each feets
 
-const feets = [];
+//menu variables
+const menuUI = document.querySelector(".menu-ui");
+const menuTop = document.querySelector(".menu-top");
+const menuMain = document.querySelector(".menu-main");
+const buttons = document.querySelector(".buttons")
+const btnPlay = document.querySelector("#btn-play");
+const btnHowTo = document.querySelector("#btn-howto")
+menuUI.style.position = "absolute";
+menuUI.style.top = "100px";
+menuUI.style.left = "300px";
+menuUI.style.width = `${canvas.width/2}px`
+menuUI.style.height = `${canvas.height/2}px`
+
+
+const menuPosition = {
+    x: canvas.width / 8,
+    y: canvas.height / 8
+}
+const menuDims = {
+    width: canvas.width * 3/4 ,
+    height: canvas.height * 3/4 
+}
+
+// variable for animation to stop and start
+let animation
+
+
 
 //player info
 class Player {
@@ -75,9 +101,10 @@ class Background extends Player {
     constructor(position) {
         super()
         this.speed = {
-            x : -2,
+            x : 0,
             y : 0
         }
+
         this.rotation = 0;
         const image = new Image();
         image.src = "./images/background.jpeg";
@@ -124,7 +151,7 @@ class Feet{
             y: canvas.height / 2 - this.height / 2 // to move in middle
         }
         this.speed = {
-            x: -2, // -1 change after play button is pressed
+            x: 0, // -1 change after play button is pressed
             y: 0,
         }
         this.rotation = 0.0001; //changed from 0 to catch error for collision
@@ -206,6 +233,7 @@ class FeetsQueue {
     }
 }
 
+
 // function to select pick from two numbers
 const selectFromTwoNumbers = (firstNum , secondNum) => {
     randomTwoNumbers = Math.random()
@@ -217,41 +245,24 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
     return randomTwoNumbers
 }
 
-
-// make an array of feet to be able to create one easily
-for (i = 0; i <50; i++) {
-    
-    //x-axis distance for each feets
-    // console.log("Feets Array Length",feets.length)
-    if (feets.length === 0) {
-        // console.log("Empty Array")
-        positionX = canvas.width / 2
-        // console.log("POsitionX",positionX)
-    } else {
-        // console.log(feets)
-        // add a fix distance for each feet
-        positionX = positionX + 250
-        // console.log("POsitionX",positionX)
-    }
-
-    feets.push(new Feet(positionX))
-    
-    
-    
-}
-
 animate = () => {
-    requestAnimationFrame(animate);
+    animation = requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
     
     if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -7;
+        player.speed.y = -5;
         player.rotation = 5
-    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
-        player.speed.y = +7;
+    } else if (player.position.y + player.height <= canvas.height) {
+        // if play button is clicked
+        if (btnPlay.innerText === "Restart") {
+            player.speed.y = 2;
+        } else if (btnPlay.innerText === "Play") {
+            player.speed.y = 0;
+        }
         player.rotation = -6
     } else {
+        
         player.speed.y = 0;
         player.rotation = 6
     }
@@ -282,8 +293,10 @@ animate = () => {
                 ) {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    location.reload()
-                    alert("Game Over")
+                    cancelAnimationFrame(animation)
+                    menuUI.style.display = "flex";
+                    // location.reload()
+                    // alert("Game Over")
                 
             }
         }
@@ -294,14 +307,16 @@ animate = () => {
             // console.log("Feet 1 Y Position",feet.position.y)
             if(player.position.x + player.width - 10>= feet.position.x &&
          // lower left corner of player image    bottom left corner of feet image
-                player.position.y + 25 <= feet.position.y + feet.height &&
+                player.position.y + 25 <= feet.position.y + feet.height - 5 &&
                 // add && for player already passed by feet
                  // top right corner of player image       top right side of feet image
                 player.position.x + player.width <=  feet.position.x + feet.width + 30){
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    location.reload()
-                    alert("Game Over")
+                    cancelAnimationFrame(animation)
+                    menuUI.style.display = "flex";
+                    // location.reload()
+                    // alert("Game Over")
             }
         }
 
@@ -309,8 +324,71 @@ animate = () => {
 }
 
 
+
+
+
+canvas.addEventListener("mousedown",() => {
+        keys.ArrowUp.pressed = true 
+        console.log("Clicked", player.speed.y)  
+})
+canvas.addEventListener("mouseup",() => {
+        keys.ArrowUp.pressed = false 
+        console.log("Unclicked", player.speed.y)
+
+})
+
+// play button event listener
+btnPlay.addEventListener("click",()=>{
+    console.log(btnPlay.innerText," is clicked")
+    menuUI.style.display = "none";
+    if (btnPlay.innerText === "Restart") {
+        location.reload()
+    } else {
+        console.log(btnPlay.innerText," is clicked")
+        player.speed.y = 2
+        background.speed.x = -2
+        feets.forEach(feet => {
+            feet.speed.x = -2;
+        });      
+    }
+    btnPlay.innerText = "Restart"
+})
+
+// How To Play button event listener
+btnHowTo.addEventListener("click",(e)=>{
+    console.log(e.target.innerText," is clicked")
+    location.reload()
+})
+
+
+
+// create background objetc
 const background = new Background();
+// create player object
 const player = new Player();
+
+//create feet obstacle objects
+// array for holding each feet obstacles
+const feets = [];
+// make an array of feet to be able to create one easily
+for (i = 0; i <50; i++) {
+    
+    //x-axis distance for each feets
+    // console.log("Feets Array Length",feets.length)
+    if (feets.length === 0) {
+        // console.log("Empty Array")
+        positionX = canvas.width / 2
+        // console.log("POsitionX",positionX)
+    } else {
+        // console.log(feets)
+        // add a fix distance for each feet
+        positionX = positionX + 250
+        // console.log("POsitionX",positionX)
+    }
+
+    feets.push(new Feet(positionX))   
+}
+
 // setup if keys are pressed
 const keys = {
     ArrowUp: {
@@ -321,246 +399,5 @@ const keys = {
     }
 }
 
-
-
+//amimate background and feet objects
 animate()
-
-//press key listener
-addEventListener("keydown", ({key}) => {
-    // console.log(key)
-    switch (key) {
-        case "ArrowUp" :
-            // console.log(key)
-            keys.ArrowUp.pressed = true
-            break
-        case "ArrowDown" :
-            // console.log(key)
-            keys.ArrowDown.pressed = true
-            break
-    }
-})
-
-// release key listener
-addEventListener("keyup", ({key}) => {
-    // console.log(key)
-    switch (key) {
-        case "ArrowUp" :
-            // console.log(key)
-            keys.ArrowUp.pressed = false
-            break
-        case "ArrowDown" :
-            // console.log(key)
-            keys.ArrowDown.pressed = false
-            break
-    }
-})
-
-
-
-
-
-//feet
-// const feet = new Feet();
-
-
-
-// //grab canvas context
-
-
-
-// // canvas backround
-// const background = {
-//     name: "Background",
-//     imgSrc : "./images/background.jpeg",
-//     posX : 0,
-//     posY : 0,
-// }
-
-// //variables
-// const startPlayerPosX = canvas.width/10
-// const startPlayerPosY = canvas.height/2
-
-
-
-// class Game {
-//     constructor(player) {
-//         this.player = "";
-//     }
-//     //create player function
-//     createPlayer = () => {
-//         this.player = new Player();
-//         console.log("Player is created.")
-//     }
-    
-//     // add image to screen
-//     addImage = (object,posX,posY) => {
-//         // console.log("inside addImage",object)
-//         object.posX = posX;
-//         object.posY = posY;
-//         const image = new Image();
-//         image.src = object.imgSrc;
-//         image.onload = () => {
-//             context.drawImage(image,object.posX,object.posY)
-//         }
-//         return image
-//         console.log(object.name,"is added to the screen")
-//     }
-//     moveImage = (image,direction) => {
-//         let oldPosX = image.posX;
-//         let oldPosY = image.posY;
-//         if (direction === "up") {
-//             image.posY -= 10;
-//         } else if (direction === "down") {
-//             image.posY += 10;
-//         } else if (direction === "left") {
-//             image.posX -= 10;
-//         }
-//     //     setTimeout(() => {
-//     //     context.clearRect(0,0,canvas.width,canvas.height)
-//     //     this.addImage(image,image.posX,image.posY)
-//     // },1000)
-
-//     }
-// }
-
-// //starting x 
-// const startingX = canvas.width/10;
-// const startingY = canvas.height/2;
-// const shoeIconPath = "images/shoe_icon.png";
-// let positionPlayerX = 0;
-// let positionPlayerY = 0;
-
-// // add player on page
-// // const addPlayerIcon = (posX,posY) => {
-// //     shoeIcon = new Image();
-// //     shoeIcon.src = shoeIconPath;
-// //     shoeIcon.onload = () => {
-// //         playerIcon.drawImage(shoeIcon,posX,posY)
-// //     }
-// //     positionPlayerX = posX
-// //     positionPlayerY = posY
-// // }
-
-// // addPlayerIcon(startingX,startingY);
-
-// //move player function
-// // player move up
-// const movePlayerUp = (player) => {
-//     let positionY = player.posY
-//     positionPlayerY = oldY - 10;
-//     imgNew = new Image();
-//     imgNew.src = shoeIconPath;
-//     imgNew.onload = () => {
-//         playerIcon.clearRect(0, 0, canvas.width, canvas.height);
-//         playerIcon.drawImage(imgNew,oldX,positionPlayerY)
-//     }
-// }
-// // player move down
-// const movePlayerDown = (posX,posY) => {
-//     let oldX = posX;
-//     let oldY = posY;
-//     positionPlayerY = oldY + 10;
-//     imgNew = new Image();
-//     imgNew.src = shoeIconPath;
-//     imgNew.onload = () => {
-//         playerIcon.clearRect(0, 0, canvas.width, canvas.height);
-//         playerIcon.drawImage(imgNew,oldX,positionPlayerY)
-//     }
-// }
-
-
-
-// //move playerIcon with keyboard up and down
-// document.addEventListener("keyup",(e)=>{
-//     if (e.key === "ArrowUp") {
-//         // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
-//         // console.log(playerIcon)
-//         console.log("Up")
-//         movePlayerUp(positionPlayerX,positionPlayerY);
-//     } else if (e.key === "ArrowDown") {
-//         // console.log(`Key ${e.key} \r\n Key code value: ${e.code}`)
-//         console.log("Down")
-//         movePlayerDown(positionPlayerX,positionPlayerY);
-//     }
-// })
-
-// // player class
-// class Player {
-//     // has x and y axis
-//     constructor (xPosition, yPosition, imgSource) {
-//         this.xPosition = 0;
-//         this.yPosition = 0;
-//         this.imgSource = "images/shoe_icon.png"; 
-//     }
-//     // can go up
-
-//     // can go down
-// }
-
-// // map class
-//  const Game = {
-//     createPlayer: (player) => {
-//         player = new Player()
-//     },
-//     addPlayer: (player) => {
-//         playerImage = new Image();
-//         playerImage = player.imgSource;
-//         playerImage.onload = () => {
-//             context.drawImage(playerImage,0,0);
-//         }
-//     },
-//  }
-// //add player to game
-// 
-// // background can move 
-
-// // obstacle class
-// // has x and y axis
-// // can move
-// // player will die if touched
-
-// player = new Player();
-// // console.log(Game.createPlayer)
-// Game.addPlayer(player)
-
-
-
-// //create player
-// const game = new Game()
-
-// game.createPlayer()
-// // console.log(game.player)
-// const backgroundImage = game.addImage(background,0,0)
-
-// setTimeout( () => {
-// const playerImage = game.addImage(game.player,startPlayerPosX,startPlayerPosY)
-// })
-// console.log(game.player)
-// game.moveImage(game.player,"up")
-// console.log(game.player)
-// console.log(context)
-
-
-
-// let x = 0;
-// //animate
-// const animate = () => {
-//     requestAnimationFrame(animate);
-//     // context.clearRect(0,0,canvas.width,canvas.height)
-//     const image = new Image();
-//         image.src = "./images/background.jpeg";
-//         image.onload = () => {
-//             context = canvas.getContext("2d");
-//             context.drawImage(image,x,0);
-//         }
-//     x-=5
-// }
-
-// // animate()
-// // 
-// const image = new Image();
-//         image.src = "./images/background.jpeg";
-//         image.onload = () => {
-//             context = canvas.getContext("2d");
-//             context.drawImage(image,x,0);
-//         }
