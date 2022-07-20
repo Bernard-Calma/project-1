@@ -329,9 +329,7 @@ animate = () => {
 
 canvas.addEventListener("mousedown",() => {
         keys.ArrowUp.pressed = true 
-        console.log("Clicked", player.speed.y)
-
-    
+        console.log("Clicked", player.speed.y)  
 })
 canvas.addEventListener("mouseup",() => {
         keys.ArrowUp.pressed = false 
