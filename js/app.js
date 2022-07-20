@@ -329,13 +329,26 @@ animate = () => {
 
 canvas.addEventListener("mousedown",() => {
         keys.ArrowUp.pressed = true 
-        console.log("Clicked", player.speed.y)  
+        // console.log("Clicked", player.speed.y)  
 })
 canvas.addEventListener("mouseup",() => {
         keys.ArrowUp.pressed = false 
-        console.log("Unclicked", player.speed.y)
+        // console.log("Unclicked", player.speed.y)
 
 })
+
+const pTag = document.querySelector("p")
+//touch event for mobile
+pTag.addEventListener("ontouchstart",() => {
+    keys.ArrowUp.pressed = true 
+    console.log("Clicked", player.speed.y)  
+})
+pTag.addEventListener("ontouchend",() => {
+    keys.ArrowUp.pressed = false 
+    console.log("Unclicked", player.speed.y)
+
+})
+
 
 // play button event listener
 btnPlay.addEventListener("click",()=>{
