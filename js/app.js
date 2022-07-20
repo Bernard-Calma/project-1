@@ -251,12 +251,18 @@ animate = () => {
     context.fillRect(0,0,canvas.width,canvas.height)
     
     if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -7;
+        player.speed.y = -5;
         player.rotation = 5
-    } else if (keys.ArrowDown.pressed && player.position.y + player.height <= canvas.height) {
-        player.speed.y = +7;
+    } else if (player.position.y + player.height <= canvas.height) {
+        // if play button is clicked
+        if (btnPlay.innerText === "Restart") {
+            player.speed.y = 2;
+        } else if (btnPlay.innerText === "Play") {
+            player.speed.y = 0;
+        }
         player.rotation = -6
     } else {
+        
         player.speed.y = 0;
         player.rotation = 6
     }
@@ -321,7 +327,21 @@ animate = () => {
 
 
 
+canvas.addEventListener("click",() => {
+    
+        keys.ArrowUp.pressed = true 
+        console.log("Clicked", player.speed.y)
 
+    
+})
+
+canvas.addEventListener("mouseup",() => {
+    
+    setTimeout(() => {
+        keys.ArrowUp.pressed = false 
+        console.log("Unclicked", player.speed.y)
+    }, 100);
+})
 
 
 //press key listener
@@ -362,6 +382,7 @@ btnPlay.addEventListener("click",()=>{
         location.reload()
     } else {
         console.log(btnPlay.innerText," is clicked")
+        player.speed.y = 2
         background.speed.x = -2
         feets.forEach(feet => {
             feet.speed.x = -2;
