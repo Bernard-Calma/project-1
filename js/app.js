@@ -37,8 +37,7 @@ const menuDims = {
 // variable for animation to stop and start
 let animation
 
-// array for holding each feet obstacles
-const feets = [];
+
 
 //player info
 class Player {
@@ -102,9 +101,10 @@ class Background extends Player {
     constructor(position) {
         super()
         this.speed = {
-            x : -2,
+            x : 0,
             y : 0
         }
+
         this.rotation = 0;
         const image = new Image();
         image.src = "./images/background.jpeg";
@@ -151,7 +151,7 @@ class Feet{
             y: canvas.height / 2 - this.height / 2 // to move in middle
         }
         this.speed = {
-            x: -2, // -1 change after play button is pressed
+            x: 0, // -1 change after play button is pressed
             y: 0,
         }
         this.rotation = 0.0001; //changed from 0 to catch error for collision
@@ -245,32 +245,7 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
     return randomTwoNumbers
 }
 
-
-// make an array of feet to be able to create one easily
-for (i = 0; i <50; i++) {
-    
-    //x-axis distance for each feets
-    // console.log("Feets Array Length",feets.length)
-    if (feets.length === 0) {
-        // console.log("Empty Array")
-        positionX = canvas.width / 2
-        // console.log("POsitionX",positionX)
-    } else {
-        // console.log(feets)
-        // add a fix distance for each feet
-        positionX = positionX + 250
-        // console.log("POsitionX",positionX)
-    }
-
-    feets.push(new Feet(positionX))
-    
-    
-    
-}
-
-
 animate = () => {
-    
     animation = requestAnimationFrame(animate);
     context.fillStyle = "black"
     context.fillRect(0,0,canvas.width,canvas.height)
@@ -313,6 +288,7 @@ animate = () => {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
                     cancelAnimationFrame(animation)
+                    menuUI.style.display = "flex";
                     // location.reload()
                     // alert("Game Over")
                 
@@ -332,6 +308,7 @@ animate = () => {
                     // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                     // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
                     cancelAnimationFrame(animation)
+                    menuUI.style.display = "flex";
                     // location.reload()
                     // alert("Game Over")
             }
@@ -341,17 +318,7 @@ animate = () => {
 }
 
 
-const background = new Background();
-const player = new Player();
-// setup if keys are pressed
-const keys = {
-    ArrowUp: {
-        pressed: false
-    },
-    ArrowDown: {
-        pressed: false
-    }
-}
+
 
 
 
@@ -388,13 +355,65 @@ addEventListener("keyup", ({key}) => {
 })
 
 // play button event listener
-btnPlay.addEventListener("click",(e)=>{
+btnPlay.addEventListener("click",()=>{
+    console.log(btnPlay.innerText," is clicked")
     menuUI.style.display = "none";
-    console.log(e.target.innerText," is clicked")
-    animate()
+    if (btnPlay.innerText === "Restart") {
+        location.reload()
+    } else {
+        console.log(btnPlay.innerText," is clicked")
+        background.speed.x = -2
+        feets.forEach(feet => {
+            feet.speed.x = -2;
+        });      
+    }
+    btnPlay.innerText = "Restart"
 })
 
 // How To Play button event listener
 btnHowTo.addEventListener("click",(e)=>{
     console.log(e.target.innerText," is clicked")
+    location.reload()
 })
+
+
+
+// create background objetc
+const background = new Background();
+// create player object
+const player = new Player();
+
+//create feet obstacle objects
+// array for holding each feet obstacles
+const feets = [];
+// make an array of feet to be able to create one easily
+for (i = 0; i <50; i++) {
+    
+    //x-axis distance for each feets
+    // console.log("Feets Array Length",feets.length)
+    if (feets.length === 0) {
+        // console.log("Empty Array")
+        positionX = canvas.width / 2
+        // console.log("POsitionX",positionX)
+    } else {
+        // console.log(feets)
+        // add a fix distance for each feet
+        positionX = positionX + 250
+        // console.log("POsitionX",positionX)
+    }
+
+    feets.push(new Feet(positionX))   
+}
+
+// setup if keys are pressed
+const keys = {
+    ArrowUp: {
+        pressed: false
+    },
+    ArrowDown: {
+        pressed: false
+    }
+}
+
+//amimate background and feet objects
+animate()
