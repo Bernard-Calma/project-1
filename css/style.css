@@ -25,6 +25,7 @@ button {
 }
 
 .score-board {
+    font-size: xx-large;
     position: absolute;
     border: solid black;
     left: 50px;

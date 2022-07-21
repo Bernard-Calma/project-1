@@ -16,8 +16,12 @@ const menuUI = document.querySelector(".menu-ui");
 const menuTop = document.querySelector(".menu-top");
 const menuMain = document.querySelector(".menu-main");
 const buttons = document.querySelector(".buttons")
+const scoreBoard = document.querySelector(".score-board")
 const btnPlay = document.querySelector("#btn-play");
 const btnHowTo = document.querySelector("#btn-howto")
+
+let score = 0
+scoreBoard.innerText = `Score: ${score}`
 menuUI.style.position = "absolute";
 menuUI.style.top = "100px";
 menuUI.style.left = "300px";
