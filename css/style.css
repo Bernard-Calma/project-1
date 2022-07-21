@@ -24,6 +24,12 @@ button {
     border: solid 4px black;
 }
 
+.score-board {
+    position: absolute;
+    border: solid black;
+    left: 50px;
+}   
+
 .menu-ui {
     display: flex;
     flex-direction: column;
