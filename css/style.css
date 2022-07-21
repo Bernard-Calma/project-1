@@ -63,3 +63,7 @@ button {
     font-size: 40px;
     font-weight: bold;
 }
+
+#menu-score {
+    left :initial
+}

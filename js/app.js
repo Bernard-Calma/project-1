@@ -24,7 +24,7 @@ let score = 0
 scoreBoard.innerText = `Score: ${score}`
 menuUI.style.position = "absolute";
 menuUI.style.top = "100px";
-menuUI.style.left = "300px";
+menuUI.style.left = "250px";
 menuUI.style.width = `${canvas.width/2}px`
 menuUI.style.height = `${canvas.height/2}px`
 
