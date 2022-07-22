@@ -24,6 +24,14 @@ button {
     border: solid 4px black;
 }
 
+.score-board {
+    font-size: xx-large;
+    position: absolute;
+    border: solid black;
+    left: 50px;
+    user-select: none;
+}   
+
 .menu-ui {
     display: flex;
     flex-direction: column;
@@ -55,4 +63,8 @@ button {
 .menu-top p {
     font-size: 40px;
     font-weight: bold;
+}
+
+#menu-score {
+    left :initial
 }
