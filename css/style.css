@@ -29,6 +29,7 @@ button {
     position: absolute;
     border: solid black;
     left: 50px;
+    user-select: none;
 }   
 
 .menu-ui {
