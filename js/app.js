@@ -255,10 +255,10 @@ const game = {
     //call addscore when player passed by a feet
     addScore: () => {
         score += 1
-        console.log("Score: ", score)
+        // console.log("Score: ", score)
     },
     updateScore: () => {
-
+        scoreBoard.innerText = "Score : " + score;
     },
     //counter used anywhere
         counter: 0,
@@ -268,7 +268,7 @@ const game = {
         animation = requestAnimationFrame(animate);
         context.fillStyle = "black"
         context.fillRect(0,0,canvas.width,canvas.height)
-        console.log(score)
+        // console.log(score)
         if (keys.ArrowUp.pressed && player.position.y >= 0) {
             player.speed.y = -5;
             player.rotation = 5
@@ -339,9 +339,10 @@ const game = {
                 }
             }      
             if(feets[game.counter].position.x <= player.position.x){
-                console.log(`Feet number ${game.counter} position: ${feets[game.counter].position.x}`)
+                // console.log(`Feet number ${game.counter} position: ${feets[game.counter].position.x}`)
                 game.addScore()
                 game.counter += 1
+                game.updateScore()
             }
         })
     }
@@ -360,7 +361,7 @@ canvas.addEventListener("mouseup",() => {
         // console.log("Unclicked", player.speed.y)
 
 })
-console.log(canvas)
+// console.log(canvas)
 //touch event for mobile
 canvas.addEventListener("touchstart",() => { 
     keys.ArrowUp.pressed = true 
