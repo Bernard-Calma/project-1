@@ -1,10 +1,13 @@
 # project-1
+Our project is about making a game that can be played in a browser using Javascript.
+
 
 ## Project Choice (Tell us which project you're doing!)
-<h2>Floating Shoes</h2>
+<h2>Floating Shoe</h2>
+<p>I decided to make a game like a flappy bird game, I think that this kind of game will help me improve my skills in coding, not that complicated so I can be able to complete the project on time and gain more knowledge like canvas and be familiar with it.</p>
 
 ## Project Description
-Floating Shoes is a game where you as a player will be a flying shoe and you need to avoid the feets that are trying to get into you as you move forward.
+Floating Shoe is a game where you as a player will be a flying shoe and you need to avoid the feets that are trying to get into you as you move forward.
 
 
 ## Wire Frames
@@ -32,9 +35,14 @@ Floating Shoes is a game where you as a player will be a flying shoe and you nee
   <li>As a player, I want my game to add a touch of physics where the character will be affected by gravity</li>
   <li>As a player, I want my game to have an animation where they die.</li>
   <li>As a player, I want my game to show how many obstacles I’ve passed by.</li>
-<ul>
+</ul>
 
+### Installation Instructions
+<p>No installation needed, click on the link below and you will be able to play the game through your browser.</p>
+<a href="https://bernard-calma.github.io/project-1/">Floating Shoe</a>
 
+### Unsolved Prolems
+<p>Sometimes the images for the background object and first foot object doesn't load properly. </p>
 
-
-
+### Forthcoming Features
+<p>Improve resolution when played in mobile</p>
