@@ -21,6 +21,7 @@ const btnPlay = document.querySelector("#btn-play");
 const btnHowTo = document.querySelector("#btn-howto")
 
 let score = 0
+
 scoreBoard.innerText = `Score: ${score}`
 menuUI.style.position = "absolute";
 menuUI.style.top = "100px";
@@ -40,7 +41,6 @@ const menuDims = {
 
 // variable for animation to stop and start
 let animation
-
 
 
 //player info
@@ -249,84 +249,104 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
     return randomTwoNumbers
 }
 
-animate = () => {
-    animation = requestAnimationFrame(animate);
-    context.fillStyle = "black"
-    context.fillRect(0,0,canvas.width,canvas.height)
+
+//game object goes here
+const game = {
+    //call addscore when player passed by a feet
+    addScore: () => {
+        score += 1
+        console.log("Score: ", score)
+    },
+    updateScore: () => {
+
+    },
+    //counter used anywhere
+        counter: 0,
+    //amimate background and feet objects
+    startGame: animate = () => {
     
-    if (keys.ArrowUp.pressed && player.position.y >= 0) {
-        player.speed.y = -5;
-        player.rotation = 5
-    } else if (player.position.y + player.height <= canvas.height) {
-        // if play button is clicked
-        if (btnPlay.innerText === "Restart") {
-            player.speed.y = 2;
-        } else if (btnPlay.innerText === "Play") {
+        animation = requestAnimationFrame(animate);
+        context.fillStyle = "black"
+        context.fillRect(0,0,canvas.width,canvas.height)
+        console.log(score)
+        if (keys.ArrowUp.pressed && player.position.y >= 0) {
+            player.speed.y = -5;
+            player.rotation = 5
+        } else if (player.position.y + player.height <= canvas.height) {
+            // if play button is clicked
+            if (btnPlay.innerText === "Restart") {
+                player.speed.y = 2;
+            } else if (btnPlay.innerText === "Play") {
+                player.speed.y = 0;
+            }
+            player.rotation = -6
+        } else {
+            
             player.speed.y = 0;
+            player.rotation = 6
         }
-        player.rotation = -6
-    } else {
-        
-        player.speed.y = 0;
-        player.rotation = 6
-    }
-    background.update()
-    player.update()
+        background.update()
+        player.update()
+
+        feets.forEach(feet => {
+            feet.update()
+            // console.log("Player X", player.position.x)
+            //     console.log("Feet X",feets[0].position.x)
+            //     console.log("Player Y", player.position.y)
+            //     console.log("Feet Y",feets[0].position.y)
     
-    feets.forEach(feet => {
-        feet.update()
-        // console.log("Player X", player.position.x)
-        //     console.log("Feet X",feets[0].position.x)
-        //     console.log("Player Y", player.position.y)
-        //     console.log("Feet Y",feets[0].position.y)
-
-        ///// COLLISION CODE ******* ///////
-        // For feet on bottom screen
-        // Colission for first feet test
-        // console.log(feets[0].rotation)
-        // added fix number to adjust collision
-        if (feet.rotation === 0) {
-            // top right corner of player image     top left side of feet image 
-            // console.log("Feet 1 Y Position",feets[0].position.y)
-            if(player.position.x + player.width - 17 >= feet.position.x &&
-         // lower left corner of player image    Top left corner of feet image
-                player.position.y + 40 >= feet.position.y&&
-               // add && for player already passed by feet
-                // top right corner of player image       top right side of feet image
-               player.position.x - 5 <=  feet.position.x + feet.width
-                ) {
-                    // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
-                    // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    cancelAnimationFrame(animation)
-                    menuUI.style.display = "flex";
-                    // location.reload()
-                    // alert("Game Over")
-                
+            ///// COLLISION CODE ******* ///////
+            // For feet on bottom screen
+            // Colission for first feet test
+            // console.log(feets[0].rotation)
+            // added fix number to adjust collision
+            if (feet.rotation === 0) {
+                // top right corner of player image     top left side of feet image 
+                // console.log("Feet 1 Y Position",feets[0].position.y)
+                if(player.position.x + player.width - 17 >= feet.position.x &&
+             // lower left corner of player image    Top left corner of feet image
+                    player.position.y + 40 >= feet.position.y&&
+                   // add && for player already passed by feet
+                    // top right corner of player image       top right side of feet image
+                   player.position.x - 5 <=  feet.position.x + feet.width
+                    ) {
+                        // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
+                        // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                        cancelAnimationFrame(animation)
+                        menuUI.style.display = "flex";
+                        // location.reload()
+                        // alert("Game Over")
+                    
+                }
             }
-        }
-
-          // For feet on bottom screen
-          if (feet.rotation === 3.15) {
-            // top right corner of player image     top left side of feet image 
-            // console.log("Feet 1 Y Position",feet.position.y)
-            if(player.position.x + player.width - 10>= feet.position.x &&
-         // lower left corner of player image    bottom left corner of feet image
-                player.position.y + 25 <= feet.position.y + feet.height - 5 &&
-                // add && for player already passed by feet
-                 // top right corner of player image       top right side of feet image
-                player.position.x + player.width <=  feet.position.x + feet.width + 30){
-                    // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
-                    // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
-                    cancelAnimationFrame(animation)
-                    menuUI.style.display = "flex";
-                    // location.reload()
-                    // alert("Game Over")
+    
+              // For feet on bottom screen
+              if (feet.rotation === 3.15) {
+                // top right corner of player image     top left side of feet image 
+                // console.log("Feet 1 Y Position",feet.position.y)
+                if(player.position.x + player.width - 10>= feet.position.x &&
+             // lower left corner of player image    bottom left corner of feet image
+                    player.position.y + 25 <= feet.position.y + feet.height - 5 &&
+                    // add && for player already passed by feet
+                     // top right corner of player image       top right side of feet image
+                    player.position.x + player.width <=  feet.position.x + feet.width + 30){
+                        // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
+                        // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                        cancelAnimationFrame(animation)
+                        menuUI.style.display = "flex";
+                        // location.reload()
+                        // alert("Game Over")
+                }
+            }      
+            if(feets[game.counter].position.x <= player.position.x){
+                console.log(`Feet number ${game.counter} position: ${feets[game.counter].position.x}`)
+                game.addScore()
+                game.counter += 1
             }
-        }
+        })
+    }
 
-    })
 }
-
 
 
 
@@ -415,5 +435,6 @@ const keys = {
     }
 }
 
-//amimate background and feet objects
-animate()
+
+game.startGame()
+
