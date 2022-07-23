@@ -9,7 +9,7 @@ const context = canvas.getContext("2d");
 canvas.width = 700; // changed to fixed width
 canvas.height = 600; // changed to fixed height
 //for mobile
-if (window.width >= 500 ) {
+if (window.innerWidth >= 500 ) {
     canvas.width = 500
     canvas.height = 600
 }
@@ -82,7 +82,7 @@ class Player {
 
         // context save and restore for rotating image
         context.save()
-
+        // move the target to play position for rotation
         context.translate(
             this.position.x + this.width / 2,
             this.position.y + this.height /  2
