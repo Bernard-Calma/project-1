@@ -277,7 +277,7 @@ const game = {
     showInstruction: () => {
         
         //instruction
-        const instructionPage = `<h1>How to play</h1>\n<ul>You need to fly and avoid those feets on your way\n<li>Press Play to start the game, once you start the game your shoe will go down due to gravity</li>\n<li>Click on the screen to make your shoe fly</li>\n</ul>\n<button onclick=\"game.removeInstruction()\">OK</button>`
+        const instructionPage = `<h1>How to play</h1>\n<ul>\n<li>You need to fly and avoid those feets on your way</li>\n<li>Press Play to start the game, once you start the game your shoe will go down due to gravity</li>\n<li>Click on the screen to make your shoe fly</li>\n</ul>\n<button onclick=\"game.removeInstruction()\">OK</button>`
 
         menuMain.innerHTML = instructionPage;
         // console.log(menuMain.innerHTML)
@@ -409,7 +409,7 @@ canvas.addEventListener("touchend",() => {
     // console.log("Unclicked", player.speed.y)
 
 })
-
+//
 const loadAddEventListener = () => {
     btnPlay = document.querySelector("#btn-play");
     btnHowTo = document.querySelector("#btn-howto")
