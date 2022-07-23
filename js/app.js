@@ -8,7 +8,11 @@ const canvas = document.querySelector("canvas")
 const context = canvas.getContext("2d");
 canvas.width = 700; // changed to fixed width
 canvas.height = 600; // changed to fixed height
-
+//for mobile
+if (window.width >= 500 ) {
+    canvas.width = 500
+    canvas.height = 600
+}
 let positionX = 0 // position for each feets
 
 //menu variables
@@ -361,6 +365,7 @@ const game = {
                     player.position.x + player.width <=  feet.position.x + feet.width + 30){
                         // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                         // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                        btnHowTo.outerHTML = `<H1>Score : ${score}</H1>`
                         cancelAnimationFrame(animation)
                         menuUI.style.display = "flex";
                         // location.reload()
