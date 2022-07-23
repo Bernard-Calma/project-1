@@ -260,6 +260,13 @@ const game = {
     updateScore: () => {
         scoreBoard.innerText = "Score : " + score;
     },
+    //add game speed function
+    addSpeed: () => {
+        background.speed.x -= 0.1
+        feets.forEach(feet => {
+            feet.speed.x -= 0.1
+        })
+    },
     //counter used anywhere
         counter: 0,
     //amimate background and feet objects
@@ -343,6 +350,8 @@ const game = {
                 game.addScore()
                 game.counter += 1
                 game.updateScore()
+                game.addSpeed()
+                console.log(background.speed.x)
             }
         })
     }
@@ -408,7 +417,7 @@ const player = new Player();
 // array for holding each feet obstacles
 const feets = [];
 // make an array of feet to be able to create one easily
-for (i = 0; i <50; i++) {
+for (i = 0; i <500; i++) {
     
     //x-axis distance for each feets
     // console.log("Feets Array Length",feets.length)
