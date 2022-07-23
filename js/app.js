@@ -9,7 +9,7 @@ const context = canvas.getContext("2d");
 canvas.width = 700; // changed to fixed width
 canvas.height = 600; // changed to fixed height
 //for mobile
-if (window.innerWidth >= 500 ) {
+if (window.innerWidth <= 500 ) {
     canvas.width = 500
     canvas.height = 600
 }
