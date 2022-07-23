@@ -373,7 +373,7 @@ const game = {
                 game.counter += 1
                 game.updateScore()
                 game.addSpeed()
-                console.log(background.speed.x)
+                // console.log(background.speed.x)
             }
         })
     }
