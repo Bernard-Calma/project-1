@@ -14,11 +14,12 @@ let positionX = 0 // position for each feets
 //menu variables
 const menuUI = document.querySelector(".menu-ui");
 const menuTop = document.querySelector(".menu-top");
-const menuMain = document.querySelector(".menu-main");
+//let to change content for instruction
+let menuMain = document.querySelector(".menu-main");
 const buttons = document.querySelector(".buttons")
 const scoreBoard = document.querySelector(".score-board")
-const btnPlay = document.querySelector("#btn-play");
-const btnHowTo = document.querySelector("#btn-howto")
+let btnPlay = document.querySelector("#btn-play");
+let btnHowTo = document.querySelector("#btn-howto")
 
 let score = 0
 
@@ -252,6 +253,8 @@ const selectFromTwoNumbers = (firstNum , secondNum) => {
 
 //game object goes here
 const game = {
+    counter: 0,
+    mainPage: menuMain.innerHTML,
     //call addscore when player passed by a feet
     addScore: () => {
         score += 1
@@ -260,8 +263,30 @@ const game = {
     updateScore: () => {
         scoreBoard.innerText = "Score : " + score;
     },
+    //add game speed function
+    addSpeed: () => {
+        background.speed.x -= 0.1
+        feets.forEach(feet => {
+            feet.speed.x -= 0.1
+        })
+    },
+    showInstruction: () => {
+        
+        //instruction
+        const instructionPage = `<h1>How to play</h1>\n<ul>You need to fly and avoid those feets on your way\n<li>Press Play to start the game, once you start the game your shoe will go down due to gravity</li>\n<li>Click on the screen to make your shoe fly</li>\n</ul>\n<button onclick=\"game.removeInstruction()\">OK</button>`
+
+        menuMain.innerHTML = instructionPage;
+        // console.log(menuMain.innerHTML)
+    },
+    removeInstruction: () => {
+        
+        menuMain.innerHTML = game.mainPage;
+        loadAddEventListener()
+        // console.log(menuMain.innerHTML)
+
+    },
     //counter used anywhere
-        counter: 0,
+
     //amimate background and feet objects
     startGame: animate = () => {
     
@@ -312,8 +337,12 @@ const game = {
                     ) {
                         // console.log("Player X", player.position.x + player.width, "Feet 1 X", feet.position.x)
                         // console.log(" Player Y", player.position.y, " Feet 1 Y",feet.position.y)
+                        // console.log(btnHowTo.outerHTML)
+                        //change how to play button into text
+                        btnHowTo.outerHTML = `<H1>Score : ${score}</H1>`
                         cancelAnimationFrame(animation)
                         menuUI.style.display = "flex";
+
                         // location.reload()
                         // alert("Game Over")
                     
@@ -343,6 +372,8 @@ const game = {
                 game.addScore()
                 game.counter += 1
                 game.updateScore()
+                game.addSpeed()
+                // console.log(background.speed.x)
             }
         })
     }
@@ -374,28 +405,34 @@ canvas.addEventListener("touchend",() => {
 
 })
 
-// play button event listener
-btnPlay.addEventListener("click",()=>{
-    // console.log(btnPlay.innerText," is clicked")
-    menuUI.style.display = "none";
-    if (btnPlay.innerText === "Restart") {
-        location.reload()
-    } else {
+const loadAddEventListener = () => {
+    btnPlay = document.querySelector("#btn-play");
+    btnHowTo = document.querySelector("#btn-howto")
+    // play button event listener
+    btnPlay.addEventListener("click",()=>{
         // console.log(btnPlay.innerText," is clicked")
-        player.speed.y = 2
-        background.speed.x = -2
-        feets.forEach(feet => {
-            feet.speed.x = -2;
-        });      
-    }
-    btnPlay.innerText = "Restart"
-})
+        menuUI.style.display = "none";
+        if (btnPlay.innerText === "Restart") {
+            location.reload()
+        } else {
+            // console.log(btnPlay.innerText," is clicked")
+            player.speed.y = 2
+            background.speed.x = -2
+            feets.forEach(feet => {
+                feet.speed.x = -2;
+            });      
+        }
+        btnPlay.innerText = "Restart"
+    })
 
-// How To Play button event listener
-btnHowTo.addEventListener("click",(e)=>{
-    console.log(e.target.innerText," is clicked")
-    location.reload()
-})
+    // How To Play button event listener
+    btnHowTo.addEventListener("click",(e)=>{
+        // console.log(e.target.innerText," is clicked")
+        // location.reload()
+        game.showInstruction()
+    })
+}
+
 
 
 
@@ -408,7 +445,7 @@ const player = new Player();
 // array for holding each feet obstacles
 const feets = [];
 // make an array of feet to be able to create one easily
-for (i = 0; i <50; i++) {
+for (i = 0; i <500; i++) {
     
     //x-axis distance for each feets
     // console.log("Feets Array Length",feets.length)
@@ -438,4 +475,4 @@ const keys = {
 
 
 game.startGame()
-
+loadAddEventListener()
